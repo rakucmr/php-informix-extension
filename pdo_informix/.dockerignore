@@ -1,0 +1,6 @@
+# Contextul de build este rădăcina proiectului (vezi docker/test-on-linux.ps1)
+extension/
+test/
+docker/*.ps1
+*.log
+build/

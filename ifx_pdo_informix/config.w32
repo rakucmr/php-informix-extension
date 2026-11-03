@@ -1,0 +1,7 @@
+ARG_ENABLE("ifx_pdo", "ifx_pdo compatibility support over PDO", "no");
+
+if (PHP_IFX_PDO != "no") {
+    AC_DEFINE("HAVE_IFX_PDO", 1, "ifx_pdo compatibility support");
+    EXTENSION("ifx_pdo", "ifx.c ifx_php.c");
+    ADD_EXTENSION_DEP("ifx_pdo", "pdo");
+}

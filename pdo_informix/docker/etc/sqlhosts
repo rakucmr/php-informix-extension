@@ -1,0 +1,5 @@
+# sqlhosts for the Informix client inside the container.
+# host.docker.internal points to the host machine.
+# The service name must match /etc/services and INFORMIXSERVER.
+
+informix_server  olsoctcp  host.docker.internal  informix_server

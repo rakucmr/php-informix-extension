@@ -1,0 +1,17 @@
+; ---------------------------------------------------------------------------
+; pdo_informix - Windows x64 builds for PHP 7.0-8.5, built from ..\src
+;
+; 1. Copy php_pdo_informix.dll into the ext\ directory of your PHP build.
+; 2. Make sure the Informix Client SDK bin directory is on PATH of the process
+;    that runs PHP, and that INFORMIXDIR / INFORMIXSERVER are set:
+;
+;      set INFORMIXDIR=C:\IBM\Informix_Client_SDK
+;      set INFORMIXSERVER=informix_server
+;      set INFORMIXSQLHOSTS=C:\IBM\Informix_Client_SDK\etc\sqlhosts
+;      set PATH=%INFORMIXDIR%\bin;%PATH%
+;
+; 3. Enable the extension:
+; ---------------------------------------------------------------------------
+
+extension_dir = "C:\php\ext"
+extension=pdo_informix

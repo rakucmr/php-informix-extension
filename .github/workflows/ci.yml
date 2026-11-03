@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: PHP syntax
+        run: |
+          set -euo pipefail
+          find . -name '*.php' -not -path './vendor/*' -print0 \
+            | xargs -0 -n1 php -l
+
+      - name: Check embedded ifx_pdo source is up to date
+        run: |
+          php ifx_pdo_informix/generate-embedded.php
+          git diff --exit-code -- ifx_pdo_informix/ifx_php.c
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate documentation
+        run: python docs/build.py
+
+      - name: Check generated documentation is committed
+        run: git diff --exit-code -- docs
+
+      - name: Validate documentation links and structure
+        run: python tools/check-docs.py --pages
+
+      - name: Validate Composer metadata
+        run: composer validate --strict php_informix/composer.json

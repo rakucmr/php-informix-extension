@@ -1,0 +1,57 @@
+name: Feature request
+description: Suggest an improvement or a new compatibility behavior
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the use case and the expected behavior. This project prioritizes
+        compatibility with the legacy ifx API and reproducible, testable changes.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options:
+        - ifx (direct CSDK)
+        - ifx_pdo (PDO-backed extension)
+        - pdo_informix (PDO driver)
+        - php_informix (PHP library)
+        - documentation
+        - build/test tooling
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do, and what blocks you today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include API signatures or examples if relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and documentation.
+          required: true
+        - label: I understand this may require an Informix test environment.
+          required: true

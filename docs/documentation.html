@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentație — ifx-compat</title>
+<meta name="description" content="Documentația ifx-compat pe module: pdo_informix, ifx_pdo, ifx direct și biblioteca PHP, fiecare cu ghid complet.">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%236f74b5'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='white' text-anchor='middle'%3Eifx%3C/text%3E%3C/svg%3E">
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#main">Sari la conținut</a>
+
+<div class="utility">
+  <div class="container utility-inner">
+    <span>PHP 7.0–8.5 · IBM Informix</span>
+    <div class="utility-links">
+      <a href="index.html">Prezentare</a>
+      <a href="documentation.html">Documentație</a>
+      <span class="lang-switch" aria-label="Limbă">
+        <a href="#" aria-current="true">RO</a>
+        <span>/</span>
+        <a href="en/documentation.html">EN</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a class="logo" href="index.html" aria-label="ifx-compat">
+      <span class="logo-mark">ifx</span>
+      <span class="logo-text">informix<small>for PHP</small></span>
+    </a>
+    <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-label="Meniu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="main-nav" data-nav aria-label="Navigare principală">
+      <a href="documentation.html" aria-current="page">Documentație</a><a href="index.html#modules">Module</a><a href="index.html#quickstart">Start rapid</a><a href="index.html#testing">Testare</a><a href="documentation.html#contributing">Contribuție</a>
+    </nav>
+    <form class="search" role="search" data-search-form action="documentation.html">
+      <label class="sr-only" for="site-search">Caută în documentație…</label>
+      <input id="site-search" type="search" name="q" placeholder="Caută în documentație…" autocomplete="off">
+      <button type="submit" aria-label="Caută"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+    </form>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="docs-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">ifx-compat</a><span>/</span><span>documentație</span></div>
+    <h1>Documentația modulelor</h1>
+    <p>Fiecare modul are propria documentație completă: cerințe, compilare, configurare, API, LOB-uri, teste, compatibilitate și depanare. Alege modulul cu care lucrezi.</p>
+  </div>
+</div>
+<div class="container docs-layout">
+  <aside class="docs-side">
+    <h3>Module</h3>
+    <nav class="module-switch"><a href="pdo_informix.html">pdo_informix</a><a href="ifx_pdo.html">ifx_pdo</a><a href="ifx.html">ifx</a><a href="php_informix.html">php_informix</a></nav>
+    <h3>Cuprins</h3>
+    <nav>
+      <a href="#modules">Module</a>
+      <a href="#choose">Cum alegi</a>
+      <a href="#compatibility">Compatibilitate</a>
+      <a href="#testing">Testare</a>
+      <a href="#reference">Referințe</a>
+      <a href="#contributing">Contribuție</a>
+      <a href="#license">Licență</a>
+    </nav>
+  </aside>
+  <div class="docs-main">
+    <section id="modules"><h2>Alege modulul</h2>
+      <p>Patru implementări, aceeași bază Informix. Fiecare pagină este autonomă și poate fi citită fără celelalte.</p>
+      <div class="module-grid"><a class="module-card" href="pdo_informix.html"><span class="module-kicker">pdo_informix</span><h3>pdo_informix — driverul PDO pentru Informix</h3><p>Driverul PDO care stă la baza lui <code>ifx_pdo</code> și a bibliotecii PHP. Oferă API-ul PDO standard, stream-uri pentru LOB-uri și acces direct la Informix prin CSDK.</p><span class="module-foot"><span class="pill">C · PDO</span><span class="module-link">Deschide</span></span></a><a class="module-card" href="ifx_pdo.html"><span class="module-kicker">ifx_pdo</span><h3>ifx_pdo — API-ul ifx peste PDO</h3><p>Extensie C care expune toate cele 39 de funcții <code>ifx_*</code> / <code>ifxus_*</code> peste <code>pdo_informix</code>. Are resurse Zend, directive INI și un motor PHP încorporat.</p><span class="module-foot"><span class="pill">C · PDO</span><span class="module-link">Deschide</span></span></a><a class="module-card" href="ifx.html"><span class="module-kicker">ifx</span><h3>ifx — extensia directă peste CSDK</h3><p>Extensie C independentă, direct peste Informix Client SDK CLI. Implementează toate cele 39 de funcții, fără PDO și fără <code>pdo_informix</code>.</p><span class="module-foot"><span class="pill">C · CSDK</span><span class="module-link">Deschide</span></span></a><a class="module-card" href="php_informix.html"><span class="module-kicker">php_informix</span><h3>php_informix — biblioteca PHP pură</h3><p>Aceleași 39 de funcții, fără compilare: un singur <code>require</code> peste <code>pdo_informix</code>. Link-urile și rezultatele sunt obiecte PHP.</p><span class="module-foot"><span class="pill">PHP · PDO</span><span class="module-link">Deschide</span></span></a></div>
+    </section>
+    <section id="choose"><h2>Cum alegi</h2><div class="table-wrap"><table><thead><tr><th>Criteriu</th><th>pdo_informix</th><th>ifx_pdo</th><th>ifx</th><th>php_informix</th></tr></thead><tbody><tr><td>API</td><td>PDO</td><td>39 funcții</td><td>39 funcții</td><td>39 funcții</td></tr><tr><td>pdo_informix</td><td>el însuși</td><td>da</td><td>nu</td><td>da</td></tr><tr><td>CSDK</td><td>da</td><td>prin driver</td><td>da</td><td>prin driver</td></tr><tr><td>Compilare</td><td>C</td><td>C</td><td>C</td><td>nu</td></tr><tr><td>Handle link</td><td>PDO</td><td>resource</td><td>resource</td><td>object</td></tr></tbody></table></div>
+      <p>Pentru cod nou cu PDO, începe cu <code>pdo_informix</code>. Pentru cod vechi cu <code>ifx_*</code>, alege <code>ifx_pdo</code> (PDO) sau <code>ifx</code> (direct). Bibliotecă este pentru deployment fără compilare.</p>
+    </section>
+    <section id="compatibility"><h2>Compatibilitate</h2>
+      <p>Matricea este rezultatul testelor reale, nu al declarațiilor.</p>
+      <div class="table-wrap"><table class="matrix"><thead><tr><th>PHP</th><th>Windows</th><th>Linux</th><th>pdo_informix</th><th>ifx_pdo</th><th>ifx</th><th>php_informix</th></tr></thead><tbody><tr><td>PHP 7.0.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.1.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.2.34</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.3.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.4.32</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.0.30</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.1.12</td><td class="yes">ZTS</td><td class="no">—</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.2.35</td><td class="no">—</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.3.36</td><td class="yes">ZTS</td><td class="no">—</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.4.27</td><td class="no">—</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.5.11/8.5.12</td><td class="yes">NTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr></tbody></table></div>
+      <p class="small-note">Coloanele Windows/Linux descriu build-urile ifx_pdo/bibliotecă; ifx direct este testat pe Windows x64.</p>
+    </section>
+    <section id="testing"><h2>Testare</h2>
+      <div class="stats">
+        <div class="stat"><strong>102</strong><span>verificări ifx direct</span></div>
+        <div class="stat"><strong>92</strong><span>verificări ifx_pdo</span></div>
+        <div class="stat"><strong>198</strong><span>aserțiuni driver PDO</span></div>
+        <div class="stat"><strong>93 + 1</strong><span>teste bibliotecă</span></div>
+      </div>
+      <p>Comenzile exacte și variabilele de mediu sunt în pagina fiecărui modul, secțiunea Testare.</p>
+    </section>
+    <section id="reference"><h2>Referințe</h2>
+      <ul>
+        <li><a href="reference/API.md">API.md</a> — semnăturile celor 39 de funcții</li>
+        <li><a href="reference/BUILD-WINDOWS.md">BUILD-WINDOWS.md</a> — build Windows, pas cu pas</li>
+        <li><a href="reference/COMPATIBILITY.md">COMPATIBILITY.md</a> — matricea și notele de testare</li>
+        <li><a href="reference/BENCHMARK.md">BENCHMARK.md</a> — metodologia și rezultatele măsurate</li>
+        <li><a href="reference/MIGRATION.md">MIGRATION.md</a> — trecerea de la extensia veche</li>
+        <li><a href="#testing">Testare</a> — medii, comenzi și curățare</li>
+        <li><a href="#license">Licență</a> — licențe pe componente și utilizare comercială</li>
+      </ul>
+    </section>
+    <section id="contributing"><h2>Contribuție</h2>
+      <p>Raportați versiunea PHP, NTS/ZTS, sistemul, binarul folosit și comanda minimă care reproduce problema. Pentru modificări în bibliotecă, rulați generarea sursei încorporate și suitele afectate.</p>
+      <p>Instrucțiuni complete pentru pull request-uri și raportare sunt în <code>CONTRIBUTING.md</code> și <code>SECURITY.md</code> din rădăcina repository-ului.</p>
+    </section>
+    <section id="license"><h2>Licență</h2>
+      <p>Codul original ifx-compat este MIT, alegere deliberată pentru adopție ușoară; pdo_informix păstrează licența Apache-2.0 a codului IBM. MIT și Apache-2.0 permit utilizare comercială și revânzare cu păstrarea notificărilor.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Componentă</th><th>Licență</th></tr></thead>
+        <tbody>
+          <tr><td><code>ifx_informix</code>, <code>ifx_pdo_informix</code>, <code>php_informix</code>, docs, scripts</td><td>MIT</td></tr>
+          <tr><td><code>pdo_informix/src</code></td><td>Apache-2.0 (IBM/PDO_INFORMIX)</td></tr>
+          <tr><td>ext/informix original</td><td>PHP License 3.01 (sursa nu este redistribuită)</td></tr>
+          <tr><td>Informix CSDK/IDS</td><td>licență comercială IBM, nu este inclusă</td></tr>
+        </tbody>
+      </table></div>
+      <p>MIT și Apache-2.0 permit utilizarea comercială și revânzarea; dacă doriți să interziceți revânzarea codului original, este nevoie de o altă licență (de exemplu AGPL-3.0 sau PolyForm Noncommercial + licență comercială).</p>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="index.html"><span class="logo-mark">ifx</span><span class="logo-text">informix<small>for PHP</small></span></a>
+      <p>API-ul procedural ifx_* peste driverul PDO modern, pentru PHP 7.0–8.5.</p>
+    </div>
+    <div>
+      <h3>Module</h3>
+      <a href="pdo_informix.html">pdo_informix</a>
+      <a href="ifx_pdo.html">ifx_pdo</a>
+      <a href="ifx.html">ifx direct</a>
+      <a href="php_informix.html">Biblioteca PHP</a>
+    </div>
+    <div>
+      <h3>Documentație</h3>
+      <a href="documentation.html#modules">Ghiduri pe module</a>
+      <a href="documentation.html#compatibility">Compatibilitate</a>
+      <a href="documentation.html#testing">Testare</a>
+      <a href="documentation.html#reference">Referințe</a>
+    </div>
+    <div>
+      <h3>Proiect</h3>
+      <a href="documentation.html#contributing">Contribuție</a>
+      <a href="documentation.html#license">Licență</a>
+    </div>
+  </div>
+  <div class="container footer-note">
+    <p>Construit pe baza extensiilor originale ext/informix (PHP 5.1) și pdo_informix, cu DeepSeek (AI), sub îndrumarea autorului proiectului. Cod original MIT; pdo_informix Apache-2.0. Contribuțiile și raportările de erori sunt binevenite.</p>
+    <p class="footer-copy">© 2026 ifx-compat · Documentație bilingvă</p>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

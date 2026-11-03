@@ -1,0 +1,23 @@
+{
+    "name": "informix/ifx-compat",
+    "description": "Reimplementarea API-ului procedural ifx_* din ext/informix (PHP 5.1) peste driverul PDO informix, pentru PHP 7.0-8.5: bibliotecă PHP și extensie C ifx",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["informix", "ifx", "pdo_informix", "compatibility", "legacy", "extension"],
+    "require": {
+        "php": ">=7.0",
+        "ext-pdo": "*"
+    },
+    "suggest": {
+        "ext-pdo_informix": "Driverul PDO pentru Informix (obligatoriu la runtime)",
+        "ext-ifx": "Extensia C ifx, pentru compatibilitate binară cu codul legacy"
+    },
+    "autoload": {
+        "files": [
+            "src/autoload.php"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

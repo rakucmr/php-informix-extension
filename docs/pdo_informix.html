@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pdo_informix — driverul PDO pentru Informix — ifx-compat</title>
+<meta name="description" content="Documentație completă pentru pdo_informix: cerințe, compilare, configurare, API, LOB-uri, teste și compatibilitate.">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%236f74b5'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='white' text-anchor='middle'%3Eifx%3C/text%3E%3C/svg%3E">
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#main">Sari la conținut</a>
+
+<div class="utility">
+  <div class="container utility-inner">
+    <span>PHP 7.0–8.5 · IBM Informix</span>
+    <div class="utility-links">
+      <a href="index.html">Prezentare</a>
+      <a href="documentation.html">Documentație</a>
+      <span class="lang-switch" aria-label="Limbă">
+        <a href="#" aria-current="true">RO</a>
+        <span>/</span>
+        <a href="en/pdo_informix.html">EN</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a class="logo" href="index.html" aria-label="ifx-compat">
+      <span class="logo-mark">ifx</span>
+      <span class="logo-text">informix<small>for PHP</small></span>
+    </a>
+    <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-label="Meniu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="main-nav" data-nav aria-label="Navigare principală">
+      <a href="documentation.html" aria-current="page">Documentație</a><a href="index.html#modules">Module</a><a href="index.html#quickstart">Start rapid</a><a href="index.html#testing">Testare</a><a href="documentation.html#contributing">Contribuție</a>
+    </nav>
+    <form class="search" role="search" data-search-form action="documentation.html">
+      <label class="sr-only" for="site-search">Caută în documentație…</label>
+      <input id="site-search" type="search" name="q" placeholder="Caută în documentație…" autocomplete="off">
+      <button type="submit" aria-label="Caută"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+    </form>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="docs-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">ifx-compat</a><span>/</span><a href="documentation.html">documentație</a><span>/</span><span>pdo_informix</span></div>
+    <p class="eyebrow">C · PDO · PHP 7.0–8.5</p>
+    <h1>pdo_informix — driverul PDO pentru Informix</h1>
+    <p>Driverul PDO care stă la baza lui <code>ifx_pdo</code> și a bibliotecii PHP. Oferă API-ul PDO standard, stream-uri pentru LOB-uri și acces direct la Informix prin CSDK.</p>
+  </div>
+</div><div class="container docs-layout"><aside class="docs-side"><h3>Module</h3><nav class="module-switch"><a href="pdo_informix.html" class="active">pdo_informix</a><a href="ifx_pdo.html">ifx_pdo</a><a href="ifx.html">ifx</a><a href="php_informix.html">php_informix</a></nav><h3>Cuprins</h3><nav><a href="#overview">Prezentare</a><a href="#facts">Pe scurt</a><a href="#requirements">Cerințe</a><a href="#install">Compilare și instalare</a><a href="#config">Configurare</a><a href="#connect">Conectare</a><a href="#example">Exemplu complet</a><a href="#api">Referință API</a><a href="#lobs">LOB-uri și SLOB</a><a href="#transactions">Tranzacții și erori</a><a href="#testing">Testare</a><a href="#compatibility">Compatibilitate</a><a href="#performance">Performanță</a><a href="#troubleshooting">Depanare</a><a href="#limits">Limitări</a><a href="#next">Alte module</a></nav><input class="doc-filter" data-doc-filter type="search" placeholder="Filtrează secțiunile…" aria-label="Filtrează secțiunile…"></aside><div class="docs-main"><section id="overview"><h2>Prezentare</h2><p>Driverul PDO este stratul care vorbește direct cu Informix Client SDK prin ODBC. Nu expune funcțiile <code>ifx_*</code>: aplicația folosește API-ul PDO standard, iar <code>ifx_pdo</code> și biblioteca PHP construiesc compatibilitatea procedurală peste el.</p><ul><li>Îl folosești direct dacă vrei PDO, prepared statements și stream-uri LOB.</li><li>Este obligatoriu pentru <code>ifx_pdo</code> și pentru biblioteca PHP.</li><li>Nu are nevoie de extensia <code>ifx</code> sau <code>ifx_pdo</code>.</li></ul><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Un singur driver, mai multe API-uri.</strong> Dacă ai cod vechi cu <code>ifx_connect()</code>, alege <code>ifx_pdo</code>, <code>ifx</code> sau biblioteca — nu driverul PDO direct.</div></div></section><section id="facts"><h2>Pe scurt</h2><div class="table-wrap"><table><thead><tr><th>Element</th><th>Valoare</th></tr></thead><tbody><tr><td>Binar / fișier</td><td><code>php_pdo_informix.dll / pdo_informix.so</code></td></tr><tr><td>API</td><td>PDO</td></tr><tr><td>Dependențe</td><td><code>ext-pdo</code>; fără <code>ifx_pdo</code></td></tr><tr><td>CSDK</td><td>4.50 sau compatibil</td></tr><tr><td>Suită proprie</td><td><strong>9/9 · 198</strong></td></tr></tbody></table></div></section><section id="requirements"><h2>Cerințe</h2><div class="table-wrap"><table><thead><tr><th>Componentă</th><th>Cerință</th></tr></thead><tbody><tr><td>PHP</td><td>7.0–8.5 x64; NTS sau ZTS, același build ca extensia/driverul.</td></tr><tr><td>Informix Client SDK</td><td>4.50 sau compatibil, cu bibliotecile CLI/ODBC și uneltele de build.</td></tr><tr><td>Server Informix</td><td>IDS 14.10.FC12 sau compatibil; orice bază de test.</td></tr><tr><td>ext-pdo</td><td>Obligatoriu; este API-ul folosit de driver.</td></tr><tr><td>pdo_informix</td><td>Acest modul este driverul; nu are nevoie de alt driver.</td></tr><tr><td>Build tools</td><td>Visual Studio 2019/2022 cu C++ pe Windows; <code>phpize</code>, GCC, make pe Linux.</td></tr></tbody></table></div><div class="notice"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></svg><div><strong>PHP 7.0–7.3 sunt EOL.</strong> Sunt acceptate pentru aplicații legacy, dar nu mai primesc update-uri de securitate.</div></div></section><section id="install"><h2>Compilare și instalare</h2><p>Compilați driverul cu header-ele PHP-ului țintă. Pe Windows, <code>build.bat</code> produce <code>php_pdo_informix.dll</code>; pe Linux, <code>phpize</code> produce <code>pdo_informix.so</code>.</p><div class="code"><div class="code-head"><span class="lang">bat</span><span class="file">build.bat</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>cd pdo_informix/extension
+build.bat &quot;C:\php-devel\devel\php-8.5.11-devel-vs17-x64&quot; &quot;C:\IBM\Informix_Client_SDK&quot;</code></pre></div><p>Pentru PHP &lt; 8.1 aplicați patch-ul JSON/BSON din <code>docs/reference/pdo-informix-php7.patch</code>; pentru PHP 7.0–7.4 aplicați și patch-ul de linker.</p><div class="code"><div class="code-head"><span class="lang">bash</span><span class="file">build.sh</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>cd pdo_informix/src
+phpize
+./configure --with-pdo-informix=/opt/IBM/informix
+make -j2</code></pre></div><p>Instalare:</p><div class="code"><div class="code-head"><span class="lang">ini</span><span class="file">php.ini</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>; php.ini
+extension=pdo_informix</code></pre></div><div class="code"><div class="code-head"><span class="lang">bat</span><span class="file">verify</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>php -m | findstr /i pdo_informix
+php -r &quot;var_dump(PDO::getAvailableDrivers());&quot;</code></pre></div></section><section id="config"><h2>Configurare</h2><p>Driverul nu are directive <code>ifx.*</code>. Configurarea se face prin DSN, variabile de mediu și atribute PDO.</p><div class="table-wrap"><table><thead><tr><th>Atribut</th><th>Valoare</th><th>Efect</th></tr></thead><tbody><tr><td><code>PDO::ATTR_ERRMODE</code></td><td><code>PDO::ERRMODE_EXCEPTION</code></td><td>Aruncă excepții la erori.</td></tr><tr><td><code>PDO::ATTR_DEFAULT_FETCH_MODE</code></td><td><code>PDO::FETCH_ASSOC</code></td><td>Rânduri asociative implicit.</td></tr><tr><td><code>PDO::ATTR_PERSISTENT</code></td><td>true / false</td><td>Conexiuni persistente, dacă driverul le suportă.</td></tr><tr><td><code>PDO::ATTR_TIMEOUT</code></td><td>secunde</td><td>Timeout de conectare.</td></tr></tbody></table></div><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">pdo-options.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>$pdo = new PDO(
+    getenv(&#x27;PDO_INFORMIX_DSN&#x27;),
+    getenv(&#x27;PDO_INFORMIX_USER&#x27;),
+    getenv(&#x27;PDO_INFORMIX_PASS&#x27;),
+    [
+        PDO::ATTR_ERRMODE =&gt; PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE =&gt; PDO::FETCH_ASSOC,
+    ]
+);</code></pre></div><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>DSN scurt vs DSN complet.</strong> Un DSN care conține <code>=</code> este trimis prin <code>SQLDriverConnect</code>; forma scurtă <code>informix:testdb</code> are nevoie de o intrare în <code>odbc.ini</code>.</div></div></section><section id="connect"><h2>Conectare</h2><p>DSN-ul complet este cea mai portabilă formă. Folosiți variabile de mediu, nu credențiale în cod.</p><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">connect.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>$pdo = new PDO(
+    getenv(&#x27;PDO_INFORMIX_DSN&#x27;), // informix:server=...;database=...;host=...;service=...;protocol=olsoctcp;
+    getenv(&#x27;PDO_INFORMIX_USER&#x27;),
+    getenv(&#x27;PDO_INFORMIX_PASS&#x27;)
+);</code></pre></div><div class="table-wrap"><table><thead><tr><th>Formă DSN</th><th>Exemplu</th></tr></thead><tbody><tr><td>Complet</td><td><code>informix:server=ids;database=db;host=127.0.0.1;service=9088;protocol=olsoctcp;</code></td></tr><tr><td>Scurt</td><td><code>informix:db@ids</code> (necesită <code>odbc.ini</code>)</td></tr></tbody></table></div></section><section id="example"><h2>Exemplu complet</h2><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">pdo_informix.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>&lt;?php
+
+$pdo = new PDO(
+    getenv(&#x27;PDO_INFORMIX_DSN&#x27;),
+    getenv(&#x27;PDO_INFORMIX_USER&#x27;),
+    getenv(&#x27;PDO_INFORMIX_PASS&#x27;),
+    [PDO::ATTR_ERRMODE =&gt; PDO::ERRMODE_EXCEPTION]
+);
+
+$stmt = $pdo-&gt;query(
+    &#x27;select tabid, tabname from systables where tabid &lt;= 5 order by tabid&#x27;
+);
+
+foreach ($stmt as $row) {
+    echo $row[&#x27;tabid&#x27;], &#x27; &#x27;, $row[&#x27;tabname&#x27;], PHP_EOL;
+}
+
+$pdo-&gt;beginTransaction();
+$pdo-&gt;exec(&quot;insert into ifx_example (name) values (&#x27;pdo&#x27;)&quot;);
+$pdo-&gt;commit();</code></pre></div></section><section id="api"><h2>Referință API</h2><p>Driverul expune API-ul PDO, nu funcțiile <code>ifx_*</code>. Dacă ai nevoie de API-ul procedural, folosește <code>ifx_pdo</code>, <code>ifx</code> sau biblioteca.</p><div class="table-wrap"><table><thead><tr><th>API</th><th>Descriere</th></tr></thead><tbody><tr><td><code>new PDO($dsn, $user, $password, $options)</code></td><td>Deschide conexiunea; opțiunile sunt atribute PDO.</td></tr><tr><td><code>PDO::query($sql)</code></td><td>Execută un statement și întoarce <code>PDOStatement</code>.</td></tr><tr><td><code>PDO::exec($sql)</code></td><td>Execută un statement fără rezultat; întoarce rândurile afectate.</td></tr><tr><td><code>PDO::prepare($sql, $options)</code></td><td>Preparează un statement; execuția cu <code>execute()</code>.</td></tr><tr><td><code>PDOStatement::execute($params)</code></td><td>Execută statement-ul, cu parametri opționali.</td></tr><tr><td><code>PDOStatement::fetch($mode)</code></td><td>Citește un rând în modul cerut.</td></tr><tr><td><code>PDOStatement::fetchAll($mode)</code></td><td>Citește toate rândurile.</td></tr><tr><td><code>PDOStatement::rowCount()</code> / <code>columnCount()</code></td><td>Numărul de rânduri afectate / coloane.</td></tr><tr><td><code>PDOStatement::closeCursor()</code></td><td>Închide cursorul și eliberează resursele.</td></tr><tr><td><code>PDOStatement::bindValue()</code> / <code>bindParam()</code></td><td>Leagă valori sau referințe, inclusiv <code>PDO::PARAM_LOB</code>.</td></tr><tr><td><code>PDOStatement::getColumnMeta($n)</code></td><td>Metadate pentru coloană, când driverul le oferă.</td></tr><tr><td><code>PDO::beginTransaction()</code> / <code>commit()</code> / <code>rollBack()</code></td><td>Tranzacții PDO.</td></tr><tr><td><code>PDO::lastInsertId()</code>, <code>quote()</code>, <code>errorInfo()</code></td><td>Funcții standard PDO.</td></tr></tbody></table></div></section><section id="lobs"><h2>LOB-uri și SLOB</h2><p>TEXT/BYTE/CLOB/BLOB se citesc ca stream-uri PDO; JSON/BSON se întorc ca string. Pentru inserare folosiți <code>PDO::PARAM_LOB</code> cu un stream.</p><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">lob.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>$fp = fopen(&#x27;php://temp&#x27;, &#x27;r+&#x27;);
+fwrite($fp, &quot;binary\0data&quot;);
+rewind($fp);
+
+$stmt = $pdo-&gt;prepare(&#x27;insert into ifx_lob (payload) values (?)&#x27;);
+$stmt-&gt;bindValue(1, $fp, PDO::PARAM_LOB);
+$stmt-&gt;execute();
+
+$row = $pdo-&gt;query(&#x27;select payload from ifx_lob&#x27;)-&gt;fetch(PDO::FETCH_ASSOC);
+echo stream_get_contents($row[&#x27;payload&#x27;]);</code></pre></div></section><section id="transactions"><h2>Tranzacții și erori</h2><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">transaction.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>try {
+    $pdo-&gt;beginTransaction();
+    $pdo-&gt;exec(&quot;insert into ifx_t (name) values (&#x27;one&#x27;)&quot;);
+    $pdo-&gt;commit();
+} catch (Throwable $e) {
+    if ($pdo-&gt;inTransaction()) {
+        $pdo-&gt;rollBack();
+    }
+    throw $e;
+}</code></pre></div></section><section id="testing"><h2>Testare</h2><p>Suita driverului are 9 teste și 198 de aserțiuni. Rulează real împotriva serverului, cu DSN-ul și credențialele din mediu. Extensia trebuie încărcată explicit dacă nu este în <code>php.ini</code>.</p><div class="code"><div class="code-head"><span class="lang">bat</span><span class="file">run-tests.bat</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>set PDO_INFORMIX_DSN=informix:server=&lt;server&gt;;database=&lt;database&gt;;host=&lt;host&gt;;service=&lt;service&gt;;protocol=olsoctcp;
+set PDO_INFORMIX_USER=&lt;user&gt;
+set PDO_INFORMIX_PASS=&lt;password&gt;
+php -d extension_dir=C:\php\ext -d extension=pdo_informix pdo_informix/test/run-tests.php</code></pre></div><div class="code"><div class="code-head"><span class="lang">bash</span><span class="file">run-tests.sh</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>export PDO_INFORMIX_DSN=&#x27;informix:server=&lt;server&gt;;database=&lt;database&gt;;host=&lt;host&gt;;service=&lt;service&gt;;protocol=olsoctcp;&#x27;
+export PDO_INFORMIX_USER=&#x27;&lt;user&gt;&#x27;
+export PDO_INFORMIX_PASS=&#x27;&lt;password&gt;&#x27;
+php -d extension=pdo_informix pdo_informix/test/run-tests.php</code></pre></div><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Teste reale.</strong> Rulează DML, LOB-uri și cursoare. Testele <code>t07_lob_trigger</code> și <code>t08_merge</code> păstrează intenționat tabele de diagnostic; curățați baza de test după rulare.</div></div></section><section id="compatibility"><h2>Compatibilitate</h2><div class="table-wrap"><table><thead><tr><th>PHP</th><th>Rezultat</th></tr></thead><tbody><tr><td>PHP 7.0.33</td><td><strong>✓</strong></td></tr><tr><td>PHP 7.1.33</td><td><strong>✓</strong></td></tr><tr><td>PHP 7.2.34</td><td><strong>✓</strong></td></tr><tr><td>PHP 7.3.33</td><td><strong>✓</strong></td></tr><tr><td>PHP 7.4.32</td><td><strong>✓</strong></td></tr><tr><td>PHP 8.0.30</td><td><strong>✓</strong></td></tr><tr><td>PHP 8.1.12</td><td><strong>✓</strong></td></tr><tr><td>PHP 8.2.35</td><td><strong>✓</strong></td></tr><tr><td>PHP 8.3.36</td><td><strong>✓</strong></td></tr><tr><td>PHP 8.4.27</td><td><strong>✓</strong></td></tr><tr><td>PHP 8.5.11/8.5.12</td><td><strong>✓</strong></td></tr></tbody></table></div><p><code>✓</code> înseamnă că driverul a fost compilat și folosit de suitele <code>ifx_pdo</code>/bibliotecă pe versiunea respectivă. Suita proprie are 9/9 teste și 198 de aserțiuni pe 8.5.11.</p><p class="small-note"><a href="reference/COMPATIBILITY.md">Matricea completă și notele de testare</a></p></section><section id="performance"><h2>Performanță</h2><div class="table-wrap"><table><thead><tr><th>Operație</th><th>pdo_informix (ms/op)</th></tr></thead><tbody><tr><td>Conexiune + închidere</td><td>27,4200</td></tr><tr><td>SELECT punctual</td><td>0,7173</td></tr><tr><td>COUNT(*)</td><td>0,6645</td></tr><tr><td>Scanare catalog</td><td>1,5123</td></tr><tr><td>INSERT</td><td>1,1075</td></tr><tr><td>UPDATE</td><td>0,3222</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>Conexiuni simultane</th><th>pdo_informix (ops/s)</th></tr></thead><tbody><tr><td>1</td><td>1079</td></tr><tr><td>25</td><td>3005</td></tr></tbody></table></div><p>Măsurat pe PHP 8.5.11 NTS x64, Informix IDS 14.10.FC12, local, fără rețea între client și server. Valorile sunt orientative; recompilați și remăsurați în mediul vostru.</p><p>pdo_informix este referința de viteză pentru celelalte variante; folosiți-l când API-ul PDO este suficient.</p></section><section id="troubleshooting"><h2>Depanare</h2><div class="table-wrap"><table><thead><tr><th>Simptom</th><th>Cauză / soluție</th></tr></thead><tbody><tr><td>Modulul nu se încarcă</td><td>Verificați NTS/ZTS, x64 și versiunea PHP; un DLL construit pentru altă versiune nu se încarcă.</td></tr><tr><td>Lipsește CSDK la runtime</td><td>Adăugați <code>%INFORMIXDIR%\bin</code> (Windows) sau <code>$INFORMIXDIR/lib</code> (Linux) în <code>PATH</code>/<code>LD_LIBRARY_PATH</code>.</td></tr><tr><td>Serverul nu este găsit</td><td>Verificați <code>INFORMIXSERVER</code>, <code>INFORMIXSQLHOSTS</code> și intrarea din <code>sqlhosts</code>.</td></tr><tr><td>Linker 14.29 vs 14.16</td><td>PHP 7.0–7.4: aplicați <code>ifx_pdo_informix/tools/patch-pe-linker.ps1</code> pe DLL.</td></tr><tr><td><code>could not find driver</code></td><td><code>pdo_informix</code> nu este încărcat sau nu este în <code>extension_dir</code>.</td></tr><tr><td><code>IM002</code> la ODBC</td><td>Numele driverului ODBC trebuie să fie exact, de exemplu <code>IBM INFORMIX ODBC DRIVER (64-bit)</code>.</td></tr></tbody></table></div></section><section id="limits"><h2>Limitări</h2><ul><li>Nu oferă funcțiile <code>ifx_*</code>; pentru acestea folosiți unul dintre celelalte module.</li><li>Fallback-ul ODBC este experimental și nu oferă metadate complete.</li><li>Coloanele JSON/BSON se întorc ca string, nu ca stream.</li></ul></section><section id="next"><h2>Alte module</h2><div class="module-grid"><a class="module-card" href="ifx_pdo.html"><span class="module-kicker">ifx_pdo</span><h3>ifx_pdo — API-ul ifx peste PDO</h3><p>C · PDO</p><span class="module-link">Deschide</span></a><a class="module-card" href="ifx.html"><span class="module-kicker">ifx</span><h3>ifx — extensia directă peste CSDK</h3><p>C · CSDK</p><span class="module-link">Deschide</span></a><a class="module-card" href="php_informix.html"><span class="module-kicker">php_informix</span><h3>php_informix — biblioteca PHP pură</h3><p>PHP · PDO</p><span class="module-link">Deschide</span></a></div><p>Referințe: <a href="reference/API.md">API.md</a> · <a href="reference/BUILD-WINDOWS.md">BUILD-WINDOWS.md</a> · <a href="reference/COMPATIBILITY.md">COMPATIBILITY.md</a> · <a href="reference/BENCHMARK.md">BENCHMARK.md</a> · <a href="reference/MIGRATION.md">MIGRATION.md</a></p></section></div></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="index.html"><span class="logo-mark">ifx</span><span class="logo-text">informix<small>for PHP</small></span></a>
+      <p>API-ul procedural ifx_* peste driverul PDO modern, pentru PHP 7.0–8.5.</p>
+    </div>
+    <div>
+      <h3>Module</h3>
+      <a href="pdo_informix.html">pdo_informix</a>
+      <a href="ifx_pdo.html">ifx_pdo</a>
+      <a href="ifx.html">ifx direct</a>
+      <a href="php_informix.html">Biblioteca PHP</a>
+    </div>
+    <div>
+      <h3>Documentație</h3>
+      <a href="documentation.html#modules">Ghiduri pe module</a>
+      <a href="documentation.html#compatibility">Compatibilitate</a>
+      <a href="documentation.html#testing">Testare</a>
+      <a href="documentation.html#reference">Referințe</a>
+    </div>
+    <div>
+      <h3>Proiect</h3>
+      <a href="documentation.html#contributing">Contribuție</a>
+      <a href="documentation.html#license">Licență</a>
+    </div>
+  </div>
+  <div class="container footer-note">
+    <p>Construit pe baza extensiilor originale ext/informix (PHP 5.1) și pdo_informix, cu DeepSeek (AI), sub îndrumarea autorului proiectului. Cod original MIT; pdo_informix Apache-2.0. Contribuțiile și raportările de erori sunt binevenite.</p>
+    <p class="footer-copy">© 2026 ifx-compat · Documentație bilingvă</p>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

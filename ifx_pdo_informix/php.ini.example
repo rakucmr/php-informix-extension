@@ -1,0 +1,26 @@
+; Exemplu de configurare pentru extensia C ifx_pdo (API complet, peste PDO).
+; Copiați liniile în php.ini după ce ați instalat ifx_pdo.dll și pdo_informix.
+
+extension=pdo_informix
+extension=ifx_pdo
+
+; Comportamentul extensiei vechi: LOB-urile se întorc ca fișier temporar.
+ifx.blobinfile=1
+
+; Alte opțiuni legacy:
+;ifx.textasvarchar=0
+;ifx.byteasvarchar=0
+;ifx.charasvarchar=0
+;ifx.nullformat=0
+
+; Valori implicite pentru ifx_connect() fără argumente:
+;ifx.default_host=<server>
+;ifx.default_database=<database>
+;ifx.default_user=<user>
+;ifx.default_password=<password>
+
+;ifx.allow_persistent=1
+;ifx.max_links=-1
+;ifx.max_persistent=-1
+;ifx.htmltbl_escape=0
+;ifx.connect_timeout=-1

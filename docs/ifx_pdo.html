@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ifx_pdo — API-ul ifx peste PDO — ifx-compat</title>
+<meta name="description" content="Documentație completă pentru ifx_pdo: cerințe, compilare, configurare, API, LOB-uri, teste și compatibilitate.">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%236f74b5'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='white' text-anchor='middle'%3Eifx%3C/text%3E%3C/svg%3E">
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#main">Sari la conținut</a>
+
+<div class="utility">
+  <div class="container utility-inner">
+    <span>PHP 7.0–8.5 · IBM Informix</span>
+    <div class="utility-links">
+      <a href="index.html">Prezentare</a>
+      <a href="documentation.html">Documentație</a>
+      <span class="lang-switch" aria-label="Limbă">
+        <a href="#" aria-current="true">RO</a>
+        <span>/</span>
+        <a href="en/ifx_pdo.html">EN</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a class="logo" href="index.html" aria-label="ifx-compat">
+      <span class="logo-mark">ifx</span>
+      <span class="logo-text">informix<small>for PHP</small></span>
+    </a>
+    <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-label="Meniu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="main-nav" data-nav aria-label="Navigare principală">
+      <a href="documentation.html" aria-current="page">Documentație</a><a href="index.html#modules">Module</a><a href="index.html#quickstart">Start rapid</a><a href="index.html#testing">Testare</a><a href="documentation.html#contributing">Contribuție</a>
+    </nav>
+    <form class="search" role="search" data-search-form action="documentation.html">
+      <label class="sr-only" for="site-search">Caută în documentație…</label>
+      <input id="site-search" type="search" name="q" placeholder="Caută în documentație…" autocomplete="off">
+      <button type="submit" aria-label="Caută"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+    </form>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="docs-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">ifx-compat</a><span>/</span><a href="documentation.html">documentație</a><span>/</span><span>ifx_pdo</span></div>
+    <p class="eyebrow">C · PDO · PHP 7.0–8.5</p>
+    <h1>ifx_pdo — API-ul ifx peste PDO</h1>
+    <p>Extensie C care expune toate cele 39 de funcții <code>ifx_*</code> / <code>ifxus_*</code> peste <code>pdo_informix</code>. Are resurse Zend, directive INI și un motor PHP încorporat.</p>
+  </div>
+</div><div class="container docs-layout"><aside class="docs-side"><h3>Module</h3><nav class="module-switch"><a href="pdo_informix.html">pdo_informix</a><a href="ifx_pdo.html" class="active">ifx_pdo</a><a href="ifx.html">ifx</a><a href="php_informix.html">php_informix</a></nav><h3>Cuprins</h3><nav><a href="#overview">Prezentare</a><a href="#facts">Pe scurt</a><a href="#requirements">Cerințe</a><a href="#install">Compilare și instalare</a><a href="#config">Configurare</a><a href="#connect">Conectare</a><a href="#example">Exemplu complet</a><a href="#api">Referință API</a><a href="#lobs">LOB-uri și SLOB</a><a href="#transactions">Tranzacții și erori</a><a href="#testing">Testare</a><a href="#compatibility">Compatibilitate</a><a href="#performance">Performanță</a><a href="#troubleshooting">Depanare</a><a href="#limits">Limitări</a><a href="#next">Alte module</a></nav><input class="doc-filter" data-doc-filter type="search" placeholder="Filtrează secțiunile…" aria-label="Filtrează secțiunile…"></aside><div class="docs-main"><section id="overview"><h2>Prezentare</h2><p>Aceasta este varianta C care păstrează contractul extensiei vechi: link-uri și rezultate <code>resource</code>, handle-uri întregi pentru LOB/CHAR/SLOB, directive <code>ifx.*</code> și toate cele 39 de funcții. Motorul care execută semantica este sursa PHP a bibliotecii, încorporată în DLL și compilată la primul apel.</p><ul><li>Potrivit pentru cod vechi care se așteaptă la <code>is_resource()</code> și la directive INI.</li><li>Necesită <code>pdo_informix</code>; cele două DLL-uri se încarcă în ordinea corectă.</li><li>Nu se poate încărca în același proces cu <code>ifx</code> direct.</li></ul><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Motor încorporat, nu wrapper subțire.</strong> Extensia refolosește exact codul bibliotecii, ca să nu existe două implementări care pot diverge.</div></div></section><section id="facts"><h2>Pe scurt</h2><div class="table-wrap"><table><thead><tr><th>Element</th><th>Valoare</th></tr></thead><tbody><tr><td>Binar / fișier</td><td><code>ifx_pdo.dll / ifx_pdo.so</code></td></tr><tr><td>API</td><td>39 funcții <code>ifx_*</code> / <code>ifxus_*</code></td></tr><tr><td>Dependențe</td><td><code>pdo_informix</code> + <code>ext-pdo</code></td></tr><tr><td>CSDK</td><td>4.50 sau compatibil</td></tr><tr><td>Suită proprie</td><td><strong>92/92</strong></td></tr></tbody></table></div></section><section id="requirements"><h2>Cerințe</h2><div class="table-wrap"><table><thead><tr><th>Componentă</th><th>Cerință</th></tr></thead><tbody><tr><td>PHP</td><td>7.0–8.5 x64; NTS sau ZTS, același build ca extensia/driverul.</td></tr><tr><td>Informix Client SDK</td><td>4.50 sau compatibil, cu bibliotecile CLI/ODBC și uneltele de build.</td></tr><tr><td>Server Informix</td><td>IDS 14.10.FC12 sau compatibil; orice bază de test.</td></tr><tr><td>ext-pdo</td><td>Obligatoriu pentru motorul încorporat.</td></tr><tr><td>pdo_informix</td><td>Obligatoriu la runtime; se încarcă înaintea lui <code>ifx_pdo</code>.</td></tr><tr><td>Build tools</td><td>Pachet PHP de dezvoltare + Visual Studio pe Windows; phpize/GCC pe Linux. Nu linkează direct CSDK.</td></tr></tbody></table></div><div class="notice"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></svg><div><strong>PHP 7.0–7.3 sunt EOL.</strong> Sunt acceptate pentru aplicații legacy, dar nu mai primesc update-uri de securitate.</div></div></section><section id="install"><h2>Compilare și instalare</h2><p>Extensia se compilează separat de driver. Are nevoie de pachetul PHP de dezvoltare, nu de CSDK la linkare; driverul aduce CSDK la runtime.</p><div class="code"><div class="code-head"><span class="lang">bat</span><span class="file">build-ifx.bat</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>cd ifx_pdo_informix
+build-ifx.bat &quot;C:\php-devel\devel\php-8.5.11-devel-vs17-x64&quot; ifx.dll &quot;C:\IBM\Informix_Client_SDK&quot;</code></pre></div><div class="code"><div class="code-head"><span class="lang">bash</span><span class="file">build-ifx-linux.sh</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>cd ifx_pdo_informix
+sh build-ifx-linux.sh</code></pre></div><p>După modificări în <code>php_informix/src/</code>, regenerați sursa încorporată:</p><div class="code"><div class="code-head"><span class="lang">bat</span><span class="file">regenerate</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>php ifx_pdo_informix/generate-embedded.php
+cd ifx_pdo_informix &amp;&amp; build-ifx.bat &quot;C:\php-devel\devel\php-8.5.11-devel-vs17-x64&quot;</code></pre></div><p>Instalare, cu driverul primul:</p><div class="code"><div class="code-head"><span class="lang">ini</span><span class="file">php.ini</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>; php.ini
+extension=pdo_informix
+extension=ifx_pdo</code></pre></div><div class="code"><div class="code-head"><span class="lang">bat</span><span class="file">verify</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>php -m | findstr /i ifx
+php --ri ifx_pdo</code></pre></div></section><section id="config"><h2>Configurare</h2><p>Directivele sunt cele ale extensiei vechi. Sunt aplicate la începutul requestului, înainte de primul apel <code>ifx_*</code>; funcțiile <code>ifx_blobinfile_mode()</code>, <code>ifx_textasvarchar()</code> etc. le pot schimba apoi.</p><div class="table-wrap"><table><thead><tr><th>Directivă</th><th>Implicit</th><th>Efect</th></tr></thead><tbody><tr><td><code>ifx.blobinfile</code></td><td>1</td><td><code>ifx_get_blob()</code> întoarce calea fișierului.</td></tr><tr><td><code>ifx.textasvarchar</code></td><td>0</td><td>TEXT/CLOB ca string.</td></tr><tr><td><code>ifx.byteasvarchar</code></td><td>0</td><td>BYTE/BLOB ca string.</td></tr><tr><td><code>ifx.charasvarchar</code></td><td>0</td><td>Taie padding-ul CHAR.</td></tr><tr><td><code>ifx.nullformat</code></td><td>0</td><td>NULL ca <code>""</code> sau <code>"NULL"</code>.</td></tr><tr><td><code>ifx.default_host</code></td><td>gol</td><td>Server implicit.</td></tr><tr><td><code>ifx.default_user</code> / <code>password</code> / <code>database</code></td><td>gol</td><td>Valori implicite pentru conectare.</td></tr><tr><td><code>ifx.allow_persistent</code></td><td>1</td><td>Permite <code>ifx_pconnect()</code>.</td></tr><tr><td><code>ifx.connect_timeout</code></td><td>-1</td><td>Timeout PDO când este &gt; 0.</td></tr><tr><td><code>ifx.max_links</code> / <code>max_persistent</code></td><td>-1</td><td>Limită de conexiuni; -1 = nelimitat.</td></tr><tr><td><code>ifx.htmltbl_escape</code></td><td>0</td><td>Escapează HTML în <code>ifx_htmltbl_result()</code>.</td></tr></tbody></table></div><div class="code"><div class="code-head"><span class="lang">ini</span><span class="file">php.ini</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>; php.ini
+ifx.blobinfile = 1
+ifx.nullformat = 0
+ifx.allow_persistent = 1</code></pre></div></section><section id="connect"><h2>Conectare</h2><p>Sintaxa este cea a extensiei vechi. Driverul PDO trebuie încărcat înaintea extensiei.</p><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">connect.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>$conn = ifx_connect(
+    getenv(&#x27;IFX_DSN&#x27;),       // database@server
+    getenv(&#x27;IFX_USER&#x27;),
+    getenv(&#x27;IFX_PASSWORD&#x27;)
+);</code></pre></div><div class="code"><div class="code-head"><span class="lang">ini</span><span class="file">php.ini</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>; php.ini
+extension=pdo_informix
+extension=ifx_pdo</code></pre></div></section><section id="example"><h2>Exemplu complet</h2><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">ifx_example.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>&lt;?php
+
+/*
+ * Windows php.ini:  extension=pdo_informix
+ *                   extension=ifx_pdo
+ * Linux php.ini:    extension=pdo_informix.so
+ *                   extension=ifx_pdo.so
+ */
+
+$conn = ifx_connect(
+    getenv(&#x27;IFX_DSN&#x27;),
+    getenv(&#x27;IFX_USER&#x27;),
+    getenv(&#x27;IFX_PASSWORD&#x27;)
+);
+
+$res = ifx_query(
+    &#x27;select tabid, tabname from systables where tabid &lt;= 5 order by tabid&#x27;,
+    $conn,
+    IFX_SCROLL
+);
+
+echo &#x27;Coloane: &#x27;, ifx_num_fields($res), PHP_EOL;
+
+while (($row = ifx_fetch_row($res)) !== false) {
+    echo $row[&#x27;tabid&#x27;], &#x27; &#x27;, $row[&#x27;tabname&#x27;], PHP_EOL;
+}
+
+ifx_free_result($res);
+ifx_close($conn);</code></pre></div></section><section id="api"><h2>Referință API</h2><p>Toate cele 39 de funcții sunt globale și au semnăturile extensiei originale. Link-urile și rezultatele sunt resurse în <code>ifx_pdo</code>/<code>ifx</code>, respectiv obiecte în bibliotecă; handle-urile LOB/CHAR/SLOB sunt identificatori întregi.</p><h3>Conexiune</h3><div class="table-wrap"><table><thead><tr><th>Funcție</th><th>Descriere</th></tr></thead><tbody><tr><td><code>ifx_connect($database, $userid, $password)</code></td><td>Deschide o conexiune; cache după DSN + user + parolă.</td></tr><tr><td><code>ifx_pconnect($database, $userid, $password)</code></td><td>Conexiune persistentă prin PDO::ATTR_PERSISTENT.</td></tr><tr><td><code>ifx_close($link = null)</code></td><td>Închide link-ul dat sau conexiunea implicită.</td></tr></tbody></table></div><h3>Interogări și rezultate</h3><div class="table-wrap"><table><thead><tr><th>Funcție</th><th>Descriere</th></tr></thead><tbody><tr><td><code>ifx_query($query, $link, $cursor_type, $blobidarray)</code></td><td>Prepare + execute; acceptă IFX_SCROLL/IFX_HOLD și blob-uri.</td></tr><tr><td><code>ifx_prepare($query, $link, $cursor_type, $blobidarray)</code></td><td>Doar prepare; execuția se face cu ifx_do().</td></tr><tr><td><code>ifx_do($result)</code></td><td>Execută un statement pregătit; poate re-executa cursorul.</td></tr><tr><td><code>ifx_fetch_row($result, $position = null)</code></td><td>Următorul rând sau rândul de la poziția dată (scroll).</td></tr><tr><td><code>ifx_htmltbl_result($result, $options = null)</code></td><td>Randează rezultatul ca tabel HTML.</td></tr><tr><td><code>ifx_free_result($result)</code></td><td>Eliberează rezultatul și statement-ul.</td></tr><tr><td><code>ifx_num_rows($result)</code></td><td>Numărul de rânduri citite până acum.</td></tr><tr><td><code>ifx_num_fields($result)</code></td><td>Numărul de coloane.</td></tr><tr><td><code>ifx_affected_rows($result)</code></td><td>Rândurile afectate de ultimul DML.</td></tr></tbody></table></div><h3>Metadate și erori</h3><div class="table-wrap"><table><thead><tr><th>Funcție</th><th>Descriere</th></tr></thead><tbody><tr><td><code>ifx_fieldtypes($result)</code></td><td>Map nume coloană → tip SQL (ex. SQLCHAR).</td></tr><tr><td><code>ifx_fieldproperties($result)</code></td><td>Proprietăți: tip, lungime, precizie, scală, nullability.</td></tr><tr><td><code>ifx_getsqlca($result)</code></td><td>Approximare a sqlca: sqlerrd1/sqlerrd2.</td></tr><tr><td><code>ifx_error($link = null)</code></td><td>Codul de stare al ultimei operații: &#x27; &#x27;, W, E sau N.</td></tr><tr><td><code>ifx_errormsg($errorcode = null)</code></td><td>Mesajul de eroare pentru codul dat sau ultima eroare.</td></tr></tbody></table></div><h3>BLOB / BYTE / TEXT</h3><div class="table-wrap"><table><thead><tr><th>Funcție</th><th>Descriere</th></tr></thead><tbody><tr><td><code>ifx_create_blob($type, $mode, $param)</code></td><td>Creează un blob: tip 0=BYTE, 1=TEXT; mod 0=memorie, 1=fișier.</td></tr><tr><td><code>ifx_get_blob($bid)</code></td><td>Conținutul blob-ului sau calea fișierului în modul blobinfile.</td></tr><tr><td><code>ifx_update_blob($bid, $content)</code></td><td>Înlocuiește conținutul unui blob.</td></tr><tr><td><code>ifx_copy_blob($bid)</code></td><td>Copiază un blob și întoarce noul id.</td></tr><tr><td><code>ifx_free_blob($bid)</code></td><td>Eliberează blob-ul.</td></tr><tr><td><code>ifx_blobinfile_mode($mode)</code></td><td>Setează modul global blob: 0=memorie, 1=fișier.</td></tr><tr><td><code>ifx_textasvarchar($mode)</code></td><td>TEXT/CLOB ca string, nu ca blob id.</td></tr><tr><td><code>ifx_byteasvarchar($mode)</code></td><td>BYTE/BLOB ca string, nu ca blob id.</td></tr><tr><td><code>ifx_charasvarchar($mode)</code></td><td>Taie spațiile finale din CHAR.</td></tr><tr><td><code>ifx_nullformat($mode)</code></td><td>NULL ca &quot;&quot; (0) sau &quot;NULL&quot; (1).</td></tr></tbody></table></div><h3>CHAR</h3><div class="table-wrap"><table><thead><tr><th>Funcție</th><th>Descriere</th></tr></thead><tbody><tr><td><code>ifx_create_char($param)</code></td><td>Creează un handle CHAR.</td></tr><tr><td><code>ifx_get_char($bid)</code></td><td>Conținutul handle-ului CHAR.</td></tr><tr><td><code>ifx_update_char($bid, $content)</code></td><td>Actualizează handle-ul CHAR.</td></tr><tr><td><code>ifx_free_char($bid)</code></td><td>Eliberează handle-ul CHAR.</td></tr></tbody></table></div><h3>SLOB (ifxus_*)</h3><div class="table-wrap"><table><thead><tr><th>Funcție</th><th>Descriere</th></tr></thead><tbody><tr><td><code>ifxus_create_slob($mode)</code></td><td>Creează un SLOB în memorie sau fișier.</td></tr><tr><td><code>ifxus_open_slob($bid, $mode)</code></td><td>Deschide un SLOB existent.</td></tr><tr><td><code>ifxus_close_slob($bid)</code></td><td>Închide handle-ul SLOB.</td></tr><tr><td><code>ifxus_tell_slob($bid)</code></td><td>Poziția curentă în SLOB.</td></tr><tr><td><code>ifxus_seek_slob($bid, $mode, $offset)</code></td><td>Deplasează poziția (SEEK_SET/CUR/END).</td></tr><tr><td><code>ifxus_read_slob($bid, $nbytes)</code></td><td>Citește n bytes din SLOB.</td></tr><tr><td><code>ifxus_write_slob($bid, $content)</code></td><td>Scrie în SLOB.</td></tr><tr><td><code>ifxus_free_slob($bid)</code></td><td>Eliberează SLOB-ul.</td></tr></tbody></table></div><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Constante:</strong> <code>IFX_SCROLL</code>, <code>IFX_HOLD</code> și <code>IFX_LO_*</code> sunt definite de extensie. Link-urile și rezultatele sunt resurse Zend; handle-urile LOB/CHAR/SLOB sunt identificatori întregi.</div></div></section><section id="lobs"><h2>LOB-uri și SLOB</h2><p>În <code>ifx_pdo</code>, <code>ifx.blobinfile=1</code> este implicit: rândul conține <strong>blob id</strong>, iar <code>ifx_get_blob()</code> întoarce calea fișierului temporar. Cu <code>ifx_blobinfile_mode(0)</code>, conținutul rămâne în memorie.</p><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">lob-insert.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>$text = ifx_create_blob(1, 0, &#x27;Hello from ifx-compat!&#x27;);
+$bytes = ifx_create_blob(0, 0, &quot;binary\0data&quot;);
+
+$res = ifx_query(
+    &#x27;insert into ifx_lob (txt, byt) values (?, ?)&#x27;,
+    $conn,
+    [$text, $bytes]
+);
+echo ifx_affected_rows($res);</code></pre></div><div class="table-wrap"><table><thead><tr><th>Mod</th><th>Setare</th><th>Rezultat</th></tr></thead><tbody><tr><td>Blob id</td><td>implicit</td><td>Întreg; <code>ifx_get_blob()</code> întoarce conținutul.</td></tr><tr><td>String</td><td><code>ifx_textasvarchar(1)</code> / <code>ifx_byteasvarchar(1)</code></td><td>Conținutul direct în rând.</td></tr><tr><td>Fișier</td><td><code>ifx_blobinfile_mode(1)</code></td><td><code>ifx_get_blob()</code> întoarce calea unui fișier temporar.</td></tr></tbody></table></div><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">lob-read.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>ifx_blobinfile_mode(1);
+$row = ifx_fetch_row(ifx_query(&#x27;select txt from ifx_lob&#x27;, $conn));
+echo file_get_contents(ifx_get_blob($row[&#x27;txt&#x27;]));
+
+$ch = ifx_create_char(&#x27;value&#x27;);
+ifx_update_char($ch, &#x27;updated&#x27;);
+echo ifx_get_char($ch);
+ifx_free_char($ch);</code></pre></div><p>SLOB-urile sunt bufferi client-side, nu obiecte <code>ifx_lo_*</code> pe server. Pentru fișiere mari, modul fișier evită dublarea memoriei.</p></section><section id="transactions"><h2>Tranzacții și erori</h2><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">errors.php</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>$res = @ifx_query(&#x27;select * from missing_table&#x27;, $conn);
+if ($res === false) {
+    echo ifx_error(), PHP_EOL;      // E, W or N
+    echo ifx_errormsg(), PHP_EOL;   // driver message
+}
+
+ifx_query(&#x27;begin work&#x27;, $conn);
+// ...
+ifx_query(&#x27;commit work&#x27;, $conn);</code></pre></div><p>Cursoarele nu supraviețuiesc unui <code>COMMIT</code>; după commit recitiți rezultatul. <code>ifx_getsqlca()</code> oferă <code>sqlerrd1</code> și <code>sqlerrd2</code> pentru ultimul DML.</p></section><section id="testing"><h2>Testare</h2><p>Suita nativă are 92 de verificări. Are nevoie de ambele extensii încărcate, driverul primul, și de DSN-ul PDO separat.</p><div class="code"><div class="code-head"><span class="lang">powershell</span><span class="file">run-native.ps1</span><button class="copy" type="button" data-copy data-copied="Copiat">Copiază</button></div><pre><code>$env:INFORMIXDIR = &#x27;C:\IBM\informix&#x27;
+$env:INFORMIXSERVER = &#x27;&lt;server&gt;&#x27;
+$env:INFORMIXSQLHOSTS = &#x27;C:\IBM\informix\etc\sqlhosts&#x27;
+$env:IFX_TEST_DSN = &#x27;&lt;database&gt;@&lt;server&gt;&#x27;
+$env:IFX_TEST_PDO_DSN = &#x27;informix:server=&lt;server&gt;;database=&lt;database&gt;;host=&lt;host&gt;;service=&lt;service&gt;;protocol=olsoctcp;&#x27;
+$env:IFX_TEST_USER = &#x27;&lt;user&gt;&#x27;
+$env:IFX_TEST_PASSWORD = &#x27;&lt;password&gt;&#x27;
+$env:IFX_PDO_EXTENSION_DIR = &#x27;C:\php\ext&#x27;
+
+.\ifx_pdo_informix\tests\run-native.ps1 `
+  -Php C:\php\php.exe `
+  -PdoDll php_pdo_informix `
+  -Dll C:\path\to\ifx_pdo.dll</code></pre></div><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Teste reale.</strong> Suitele creează tabele temporare, rulează DML, LOB-uri și cursoare, apoi curăță datele. Nu folosesc mock-uri.</div></div></section><section id="compatibility"><h2>Compatibilitate</h2><div class="table-wrap"><table><thead><tr><th>PHP</th><th>Rezultat</th></tr></thead><tbody><tr><td>PHP 7.0.33</td><td><strong>92/92</strong></td></tr><tr><td>PHP 7.1.33</td><td><strong>92/92</strong></td></tr><tr><td>PHP 7.2.34</td><td><strong>92/92</strong></td></tr><tr><td>PHP 7.3.33</td><td><strong>92/92</strong></td></tr><tr><td>PHP 7.4.32</td><td><strong>92/92</strong></td></tr><tr><td>PHP 8.0.30</td><td><strong>92/92</strong></td></tr><tr><td>PHP 8.1.12</td><td><strong>92/92</strong></td></tr><tr><td>PHP 8.2.35</td><td><strong>92/92</strong></td></tr><tr><td>PHP 8.3.36</td><td><strong>92/92</strong></td></tr><tr><td>PHP 8.4.27</td><td><strong>92/92</strong></td></tr><tr><td>PHP 8.5.11/8.5.12</td><td><strong>92/92</strong></td></tr></tbody></table></div><p>Rezultatele sunt din suitele reale, pe fiecare build PHP; nu sunt estimări.</p><p class="small-note"><a href="reference/COMPATIBILITY.md">Matricea completă și notele de testare</a></p></section><section id="performance"><h2>Performanță</h2><div class="table-wrap"><table><thead><tr><th>Operație</th><th>Modul (ms/op)</th><th>PDO direct (ms/op)</th><th>Raport</th></tr></thead><tbody><tr><td>Conexiune + închidere</td><td>27,3100</td><td>27,4200</td><td>×1,00</td></tr><tr><td>SELECT punctual</td><td>0,7697</td><td>0,7173</td><td>×1,07</td></tr><tr><td>COUNT(*)</td><td>0,7187</td><td>0,6645</td><td>×1,08</td></tr><tr><td>Scanare catalog</td><td>2,0774</td><td>1,5123</td><td>×1,37</td></tr><tr><td>INSERT</td><td>1,4796</td><td>1,1075</td><td>×1,34</td></tr><tr><td>UPDATE</td><td>0,6664</td><td>0,3222</td><td>×2,07</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>Conexiuni simultane</th><th>Modul (ops/s)</th><th>PDO direct (ops/s)</th></tr></thead><tbody><tr><td>1</td><td>859</td><td>1079</td></tr><tr><td>25</td><td>2621</td><td>3005</td></tr></tbody></table></div><p>Măsurat pe PHP 8.5.11 NTS x64, Informix IDS 14.10.FC12, local, fără rețea între client și server. Valorile sunt orientative; recompilați și remăsurați în mediul vostru.</p><p>Varianta rulează peste PDO, deci plătește marshalling-ul suplimentar al stratului PHP; diferențele față de PDO sunt vizibile mai ales la UPDATE și scanare.</p></section><section id="troubleshooting"><h2>Depanare</h2><div class="table-wrap"><table><thead><tr><th>Simptom</th><th>Cauză / soluție</th></tr></thead><tbody><tr><td>Modulul nu se încarcă</td><td>Verificați NTS/ZTS, x64 și versiunea PHP; un DLL construit pentru altă versiune nu se încarcă.</td></tr><tr><td>Lipsește CSDK la runtime</td><td>Adăugați <code>%INFORMIXDIR%\bin</code> (Windows) sau <code>$INFORMIXDIR/lib</code> (Linux) în <code>PATH</code>/<code>LD_LIBRARY_PATH</code>.</td></tr><tr><td>Serverul nu este găsit</td><td>Verificați <code>INFORMIXSERVER</code>, <code>INFORMIXSQLHOSTS</code> și intrarea din <code>sqlhosts</code>.</td></tr><tr><td>Linker 14.29 vs 14.16</td><td>PHP 7.x: patch pe <code>ifx_pdo</code> și pe driver.</td></tr><tr><td>Ordinea de încărcare</td><td><code>extension=pdo_informix</code> trebuie să apară înaintea <code>extension=ifx_pdo</code>.</td></tr><tr><td>Cod încorporat vechi</td><td>Rulați <code>php ifx_pdo_informix/generate-embedded.php</code> și reconstruiți.</td></tr></tbody></table></div></section><section id="limits"><h2>Limitări</h2><ul><li>Depinde de <code>pdo_informix</code>; nu este o extensie autonomă.</li><li>Prima utilizare dintr-un request compilează sursa încorporată; există un cost de pornire.</li><li>Nu se încarcă împreună cu <code>ifx</code> direct.</li></ul></section><section id="next"><h2>Alte module</h2><div class="module-grid"><a class="module-card" href="pdo_informix.html"><span class="module-kicker">pdo_informix</span><h3>pdo_informix — driverul PDO pentru Informix</h3><p>C · PDO</p><span class="module-link">Deschide</span></a><a class="module-card" href="ifx.html"><span class="module-kicker">ifx</span><h3>ifx — extensia directă peste CSDK</h3><p>C · CSDK</p><span class="module-link">Deschide</span></a><a class="module-card" href="php_informix.html"><span class="module-kicker">php_informix</span><h3>php_informix — biblioteca PHP pură</h3><p>PHP · PDO</p><span class="module-link">Deschide</span></a></div><p>Referințe: <a href="reference/API.md">API.md</a> · <a href="reference/BUILD-WINDOWS.md">BUILD-WINDOWS.md</a> · <a href="reference/COMPATIBILITY.md">COMPATIBILITY.md</a> · <a href="reference/BENCHMARK.md">BENCHMARK.md</a> · <a href="reference/MIGRATION.md">MIGRATION.md</a></p></section></div></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="index.html"><span class="logo-mark">ifx</span><span class="logo-text">informix<small>for PHP</small></span></a>
+      <p>API-ul procedural ifx_* peste driverul PDO modern, pentru PHP 7.0–8.5.</p>
+    </div>
+    <div>
+      <h3>Module</h3>
+      <a href="pdo_informix.html">pdo_informix</a>
+      <a href="ifx_pdo.html">ifx_pdo</a>
+      <a href="ifx.html">ifx direct</a>
+      <a href="php_informix.html">Biblioteca PHP</a>
+    </div>
+    <div>
+      <h3>Documentație</h3>
+      <a href="documentation.html#modules">Ghiduri pe module</a>
+      <a href="documentation.html#compatibility">Compatibilitate</a>
+      <a href="documentation.html#testing">Testare</a>
+      <a href="documentation.html#reference">Referințe</a>
+    </div>
+    <div>
+      <h3>Proiect</h3>
+      <a href="documentation.html#contributing">Contribuție</a>
+      <a href="documentation.html#license">Licență</a>
+    </div>
+  </div>
+  <div class="container footer-note">
+    <p>Construit pe baza extensiilor originale ext/informix (PHP 5.1) și pdo_informix, cu DeepSeek (AI), sub îndrumarea autorului proiectului. Cod original MIT; pdo_informix Apache-2.0. Contribuțiile și raportările de erori sunt binevenite.</p>
+    <p class="footer-copy">© 2026 ifx-compat · Documentație bilingvă</p>
+  </div>
+</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

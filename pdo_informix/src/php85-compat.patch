@@ -1,0 +1,64 @@
+diff --git a/informix_driver.c b/informix_driver.c
+index 228c765..c744b86 100644
+--- a/informix_driver.c
++++ b/informix_driver.c
+@@ -88,7 +88,7 @@ static int dbh_prepare_stmt(pdo_dbh_t *dbh, pdo_stmt_t *stmt, const char *stmt_s
+ 	/* this is necessary...it tells the parser what we require */
+ 	stmt->supports_placeholders = PDO_PLACEHOLDER_POSITIONAL;
+ #if PHP_8_1_OR_HIGHER
+-        rc = pdo_parse_params(stmt, (char *) stmt_string,
++        rc = pdo_parse_params(stmt, stmt_string,
+                               &stmt_res->converted_statement);
+ #else
+ 	rc = pdo_parse_params(stmt, (char *) stmt_string, stmt_len,
+@@ -147,7 +147,9 @@ static int dbh_prepare_stmt(pdo_dbh_t *dbh, pdo_stmt_t *stmt, const char *stmt_s
+ 	/* Check for errors from that prepare */
+ 	check_stmt_error(rc, "SQLPrepare");
+ 	if (rc == SQL_ERROR) {
+-		stmt_cleanup(stmt );
++#if !PHP_8_1_OR_HIGHER
++                stmt_cleanup(stmt );
++#endif
+ 		return FALSE;
+ 	}
+ 
+diff --git a/informix_statement.c b/informix_statement.c
+index 013c533..103c139 100644
+--- a/informix_statement.c
++++ b/informix_statement.c
+@@ -41,7 +41,7 @@ struct lob_stream_data
+ };
+ 
+ 
+-size_t lob_stream_read(php_stream *stream, char *buf, size_t count )
++ssize_t lob_stream_read(php_stream *stream, char *buf, size_t count )
+ {
+ 	SQLLEN readBytes = 0;
+ 	struct lob_stream_data *data = stream->abstract;
+@@ -81,7 +81,7 @@ size_t lob_stream_read(php_stream *stream, char *buf, size_t count )
+ 	return (size_t) readBytes;
+ }
+ 
+-size_t lob_stream_write(php_stream *stream, const char *buf, size_t count )
++ssize_t lob_stream_write(php_stream *stream, const char *buf, size_t count )
+ {
+ 	return 0;
+ }
+@@ -415,9 +415,17 @@ int stmt_bind_parameter(pdo_stmt_t *stmt, struct pdo_bound_param_data *curr )
+                                 } else {
+                                         parameter = &curr->parameter;
+                                 }
++
++#if PHP_8_1_OR_HIGHER
++			if (Z_TYPE_P(parameter) == IS_NULL
++					|| (is_num && Z_STRVAL_P(parameter) != NULL
++					&& (strcmp(Z_STRVAL_P(parameter), "") == 0))) {
++#else
+ 			if (Z_TYPE_P(parameter) == IS_NULL
+ 					|| (is_num && Z_STRVAL_P(parameter) != NULL
+ 					&& (Z_STRVAL_P(parameter) == '\0'))) {
++#endif
++
+ #else
+ 			if (Z_TYPE_P(curr->parameter) == IS_NULL
+ 					|| (is_num && Z_STRVAL_P(curr->parameter) != NULL

@@ -1,0 +1,18 @@
+--- a/src/informix_statement.c
++++ b/src/informix_statement.c
+@@ -1758,6 +1758,7 @@
+ 	/* access our look aside data */
+ 	column_data *col_res = &stmt_res->columns[colno];
+ 
++	#if PHP_8_1_OR_HIGHER
+ 	if (col_res->json_col || col_res->bson_col) {
+ 		/*
+ 		 * JSON/BSON: valorile sosesc ca smart LOB, dar aplicația le vrea ca
+@@ -1788,6 +1789,7 @@
+ 
+ 		return TRUE;
+ 	}
++#endif
+ 	if (col_res->returned_type == PDO_PARAM_LOB) {
+ 		php_stream *stream = create_lob_stream(stmt, stmt_res, colno );	/* already opened */
+ #if PHP_8_1_OR_HIGHER

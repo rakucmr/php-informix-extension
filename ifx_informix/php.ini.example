@@ -1,0 +1,8 @@
+; Exemplu de configurare pentru extensia C ifx (API direct peste CSDK).
+; Nu are nevoie de pdo_informix. Nu încărcați și ifx_pdo în același proces.
+
+extension=ifx
+
+; Extensia directă implementează toate cele 39 de funcții ifx_* / ifxus_*.
+; Conexiunea implicită folosește IFX_DEFAULT_DATABASE / IFX_DEFAULT_USER /
+; IFX_DEFAULT_PASSWORD din mediu, apoi INFORMIXDATABASE.

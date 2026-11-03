@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ifx-compat — Informix for PHP 7.0–8.5</title>
+<meta name="description" content="Four modules for IBM Informix in PHP: PDO driver, ifx C extension, PHP library and bilingual documentation.">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%236f74b5'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='white' text-anchor='middle'%3Eifx%3C/text%3E%3C/svg%3E">
+</head>
+<body class="page-home">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="utility">
+  <div class="container utility-inner">
+    <span>PHP 7.0–8.5 · IBM Informix</span>
+    <div class="utility-links">
+      <a href="index.html">Overview</a>
+      <a href="documentation.html">Documentation</a>
+      <span class="lang-switch" aria-label="Language">
+        <a href="../index.html">RO</a>
+        <span>/</span>
+        <a href="#" aria-current="true">EN</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a class="logo" href="index.html" aria-label="ifx-compat">
+      <span class="logo-mark">ifx</span>
+      <span class="logo-text">informix<small>for PHP</small></span>
+    </a>
+    <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="main-nav" data-nav aria-label="Main navigation">
+      <a href="documentation.html">Documentation</a><a href="index.html#modules">Modules</a><a href="index.html#quickstart">Quick start</a><a href="index.html#testing">Testing</a><a href="documentation.html#contributing">Contributing</a>
+    </nav>
+    <form class="search" role="search" data-search-form action="documentation.html">
+      <label class="sr-only" for="site-search">Search the documentation…</label>
+      <input id="site-search" type="search" name="q" placeholder="Search the documentation…" autocomplete="off">
+      <button type="submit" aria-label="Search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+    </form>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">PHP 7.0–8.5 · Windows &amp; Linux</p>
+      <h1>Informix for modern PHP, without compromises.</h1>
+      <p class="hero-lead">The procedural <code>ifx_*</code> API from 2005, available on PHP 7.0–8.5. Choose the PDO driver, ifx_pdo, the pure PHP library or the direct <code>ifx</code> variant — same semantics, same results, on Windows and Linux.</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="documentation.html">Read the documentation <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn ghost" href="#modules">Browse the 4 modules</a>
+      </div>
+      <ul class="hero-points">
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg> PHP 7.0–8.5, NTS and TS</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg> Windows and Linux</li>
+        <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg> no credentials in code</li>
+      </ul>
+    </div>
+    <div class="hero-code">
+      <div class="window-bar"><span></span><span></span><span></span><em>ifx_connect.php</em></div>
+      <div class="code"><pre><code>&lt;?php
+$conn = ifx_connect(
+    getenv(&#x27;IFX_DSN&#x27;),
+    getenv(&#x27;IFX_USER&#x27;),
+    getenv(&#x27;IFX_PASSWORD&#x27;)
+);
+
+$res = ifx_query(
+    &#x27;select tabname from systables&#x27;,
+    $conn,
+    IFX_SCROLL
+);
+
+while ($row = ifx_fetch_row($res)) {
+    echo $row[&#x27;tabname&#x27;], PHP_EOL;
+}</code></pre></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="modules">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Modules</p>
+      <h2>Four modules, one API</h2>
+      <p>Each folder stands on its own, yet all share the same semantics and integration tests.</p>
+    </div>
+    <div class="module-grid"><a class="module-card" href="pdo_informix.html"><span class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><span class="module-kicker">pdo_informix</span><h3>PDO driver</h3><p>The foundation: the Informix PDO driver with compatibility patches for PHP 7.0–8.5. ifx_pdo and the PHP library go through it; direct ifx does not.</p><span class="module-foot"><span class="pill">C · PDO</span><span class="module-link">Open <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a><a class="module-card" href="ifx.html"><span class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span><span class="module-kicker">ifx</span><h3>ifx (direct CSDK)</h3><p>C extension with all 39 functions, directly over the CSDK CLI: LOBs, CHAR, SLOB, scroll, metadata and SQLCA, with no pdo_informix. Loads with extension=ifx.</p><span class="module-foot"><span class="pill">C · CSDK</span><span class="module-link">Open <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a><a class="module-card" href="ifx_pdo.html"><span class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span><span class="module-kicker">ifx_pdo</span><h3>ifx_pdo (pdo based)</h3><p>C extension over PDO: ifx_* functions, Zend resources, INI directives. It needs php_pdo_informix.dll and loads with extension=ifx_pdo.</p><span class="module-foot"><span class="pill">C · resources</span><span class="module-link">Open <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a><a class="module-card" href="php_informix.html"><span class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 9-4 3 4 3m8-6 4 3-4 3M14 4l-4 16"/></svg></span><span class="module-kicker">php_informix</span><h3>PHP library</h3><p>The same semantics without compilation. One require and the global functions are available; links and results are PHP objects, while LOB/CHAR/SLOB handles stay integer ids.</p><span class="module-foot"><span class="pill">PHP · objects</span><span class="module-link">Open <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a><a class="module-card" href="documentation.html"><span class="module-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2.5Z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H21"/></svg></span><span class="module-kicker">docs</span><h3>Documentation</h3><p>Bilingual site, complete per-module guides, API reference, compatibility matrix and complete examples. Fully offline.</p><span class="module-foot"><span class="pill">RO + EN</span><span class="module-link">Open <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></span></a></div>
+  </div>
+</section>
+
+<section class="section alt" id="compare">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Choose</p>
+      <h2>Which one?</h2>
+    </div>
+    <div class="table-wrap compare-table">
+      <table>
+        <thead><tr><th></th><th>pdo_informix</th><th>ifx_pdo</th><th>php_informix</th><th>ifx<br><small>direct</small></th></tr></thead>
+        <tbody><tr><th>Needs pdo_informix</th><td>itself</td><td>yes</td><td>yes, through PDO</td><td>no</td></tr><tr><th>Informix Client SDK</th><td>yes</td><td>yes</td><td>yes, through pdo_informix</td><td>yes</td></tr><tr><th>Loading</th><td>extension=pdo_informix</td><td>extension=pdo_informix + ifx_pdo</td><td>require autoload.php</td><td>extension=ifx</td></tr><tr><th>Handle</th><td>PDO object</td><td>Zend resource</td><td>PHP object</td><td>Zend resource</td></tr><tr><th>Build</th><td>C + CSDK, per PHP</td><td>C + CSDK, per PHP</td><td>none</td><td>C + CSDK, per PHP</td></tr><tr><th>API</th><td>PDO</td><td>full ifx_* / ifxus_* (39)</td><td>full ifx_* / ifxus_* (39)</td><td>full ifx_* / ifxus_* (39)</td></tr><tr><th>Best for</th><td>new applications, PDO ecosystem</td><td>new and legacy applications</td><td>simple deployment, prototypes</td><td>new and legacy applications; production without PDO, lowest overhead</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="quickstart">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Quick start</p>
+      <h2>First query</h2>
+      <p>Four ways to reach the same database: the PDO driver, direct ifx over CSDK, ifx_pdo over PDO and the PHP library. Keep the DSN and credentials in the environment.</p>
+    </div>
+    <div class="code-tabs-box" data-code-tabs><div class="code-tabs"><button type="button" data-tab="lib" class="active" aria-selected="true">PHP library</button><button type="button" data-tab="ext" class="" aria-selected="false">ifx_pdo (pdo based)</button><button type="button" data-tab="direct" class="" aria-selected="false">ifx (direct)</button><button type="button" data-tab="pdo" class="" aria-selected="false">PDO</button></div><div class="code-panel active" data-panel="lib"><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">quickstart.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>&lt;?php
+require __DIR__ . &#x27;/php_informix/src/autoload.php&#x27;;
+
+$conn = ifx_connect(
+    getenv(&#x27;IFX_DSN&#x27;),
+    getenv(&#x27;IFX_USER&#x27;),
+    getenv(&#x27;IFX_PASSWORD&#x27;)
+);
+
+$res = ifx_query(&#x27;select tabid, tabname from systables&#x27;, $conn, IFX_SCROLL);
+
+while (($row = ifx_fetch_row($res)) !== false) {
+    echo $row[&#x27;tabid&#x27;], &#x27; &#x27;, $row[&#x27;tabname&#x27;], PHP_EOL;
+}
+
+ifx_free_result($res);
+ifx_close($conn);</code></pre></div></div><div class="code-panel" data-panel="ext"><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">ifx_pdo.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>&lt;?php
+/*
+ * Windows php.ini:
+ *   extension=pdo_informix
+ *   extension=ifx_pdo
+ *
+ * Linux php.ini:
+ *   extension=pdo_informix.so
+ *   extension=ifx_pdo.so
+ *
+ * CLI Windows:
+ *   php -d extension=pdo_informix -d extension=ifx_pdo ifx_pdo.php
+ *
+ * CLI Linux:
+ *   php -d extension=pdo_informix.so -d extension=ifx_pdo.so ifx_pdo.php
+ */
+
+$conn = ifx_connect(
+    getenv(&#x27;IFX_DSN&#x27;),
+    getenv(&#x27;IFX_USER&#x27;),
+    getenv(&#x27;IFX_PASSWORD&#x27;)
+);
+
+$res = ifx_query(&#x27;select tabid, tabname from systables&#x27;, $conn, IFX_SCROLL);
+
+while (($row = ifx_fetch_row($res)) !== false) {
+    echo $row[&#x27;tabid&#x27;], &#x27; &#x27;, $row[&#x27;tabname&#x27;], PHP_EOL;
+}
+
+ifx_free_result($res);
+ifx_close($conn);</code></pre></div></div><div class="code-panel" data-panel="direct"><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">ifx.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>&lt;?php
+/*
+ * Windows php.ini:
+ *   extension=ifx
+ *
+ * Linux php.ini:
+ *   extension=ifx.so
+ *
+ * CLI Windows:
+ *   php -d extension=ifx ifx.php
+ *
+ * CLI Linux:
+ *   php -d extension=ifx.so ifx.php
+ */
+
+$conn = ifx_connect(
+    getenv(&#x27;IFX_DSN&#x27;),
+    getenv(&#x27;IFX_USER&#x27;),
+    getenv(&#x27;IFX_PASSWORD&#x27;)
+);
+
+$res = ifx_query(&#x27;select tabid, tabname from systables&#x27;, $conn, IFX_SCROLL);
+
+while (($row = ifx_fetch_row($res)) !== false) {
+    echo $row[&#x27;tabid&#x27;], &#x27; &#x27;, $row[&#x27;tabname&#x27;], PHP_EOL;
+}
+
+ifx_free_result($res);
+ifx_close($conn);</code></pre></div></div><div class="code-panel" data-panel="pdo"><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">pdo.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>&lt;?php
+$pdo = new PDO(
+    getenv(&#x27;PDO_INFORMIX_DSN&#x27;),
+    getenv(&#x27;PDO_INFORMIX_USER&#x27;),
+    getenv(&#x27;PDO_INFORMIX_PASS&#x27;)
+);
+
+$stmt = $pdo-&gt;query(&#x27;select tabid, tabname from systables&#x27;);
+foreach ($stmt as $row) {
+    echo $row[&#x27;tabid&#x27;], &#x27; &#x27;, $row[&#x27;tabname&#x27;], PHP_EOL;
+}</code></pre></div></div></div>
+    <p class="small-note">The ifx_pdo and ifx examples show in their comments how to load the extension, both through php.ini and with -d extension. Complete build commands are in the documentation.</p>
+  </div>
+</section>
+
+<section class="section alt" id="compatibility">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Matrix</p>
+      <h2>Verified compatibility</h2>
+      <p>A matrix built from real tests, not claims. All four modules appear in the table; every build has a PDO driver compiled for that PHP version.</p>
+    </div>
+    <div class="table-wrap">
+      <table class="matrix">
+        <thead><tr><th>PHP</th><th>Windows</th><th>Linux</th><th>pdo_informix</th><th>ifx_pdo</th><th>ifx</th><th>php_informix</th></tr></thead>
+        <tbody><tr><td>PHP 7.0.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.1.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.2.34</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.3.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.4.32</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.0.30</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.1.12</td><td class="yes">ZTS</td><td class="no">—</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.2.35</td><td class="no">—</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.3.36</td><td class="yes">ZTS</td><td class="no">—</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.4.27</td><td class="no">—</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.5.11/8.5.12</td><td class="yes">NTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr></tbody>
+      </table>
+    </div>
+    <p class="small-note">The Windows/Linux columns describe the ifx_pdo/library builds; pdo_informix is included in every build. Direct ifx: 102/102 on PHP 7.0–8.5, run on Windows x64 (7.x–8.4 ZTS, 8.5 NTS).</p>
+  </div>
+</section>
+
+<section class="section" id="testing">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Quality</p>
+      <h2>Tested, not assumed</h2>
+      <p>Test suites, runnable examples and builds on Windows and Linux.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>93 + 1</strong><span>PHP library tests</span></div>
+      <div class="stat"><strong>92</strong><span>C extension checks</span></div>
+      <div class="stat"><strong>198</strong><span>PDO driver assertions</span></div>
+      <div class="stat"><strong>11</strong><span>PHP versions</span></div>
+    </div>
+    <div class="docs-cta">
+      <div>
+        <h2>The complete documentation</h2>
+        <p>From requirements and builds to LOBs, cursors, API reference and troubleshooting.</p>
+      </div>
+      <a class="btn primary" href="documentation.html">Open the documentation <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="index.html"><span class="logo-mark">ifx</span><span class="logo-text">informix<small>for PHP</small></span></a>
+      <p>The procedural ifx_* API on top of the modern PDO driver, for PHP 7.0–8.5.</p>
+    </div>
+    <div>
+      <h3>Modules</h3>
+      <a href="pdo_informix.html">pdo_informix</a>
+      <a href="ifx_pdo.html">ifx_pdo</a>
+      <a href="ifx.html">direct ifx</a>
+      <a href="php_informix.html">PHP library</a>
+    </div>
+    <div>
+      <h3>Documentation</h3>
+      <a href="documentation.html#modules">Per-module guides</a>
+      <a href="documentation.html#compatibility">Compatibility</a>
+      <a href="documentation.html#testing">Testing</a>
+      <a href="documentation.html#reference">References</a>
+    </div>
+    <div>
+      <h3>Project</h3>
+      <a href="documentation.html#contributing">Contributing</a>
+      <a href="documentation.html#license">License</a>
+    </div>
+  </div>
+  <div class="container footer-note">
+    <p>Built on the original ext/informix (PHP 5.1) and pdo_informix extensions, with DeepSeek (AI), under the project author&#x27;s guidance. Original code MIT; pdo_informix Apache-2.0. Contributions and bug reports are welcome.</p>
+    <p class="footer-copy">© 2026 ifx-compat · Bilingual documentation</p>
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

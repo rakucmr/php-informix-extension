@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentation — ifx-compat</title>
+<meta name="description" content="ifx-compat documentation by module: pdo_informix, ifx_pdo, direct ifx and the PHP library, each with a complete guide.">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%236f74b5'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='white' text-anchor='middle'%3Eifx%3C/text%3E%3C/svg%3E">
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="utility">
+  <div class="container utility-inner">
+    <span>PHP 7.0–8.5 · IBM Informix</span>
+    <div class="utility-links">
+      <a href="index.html">Overview</a>
+      <a href="documentation.html">Documentation</a>
+      <span class="lang-switch" aria-label="Language">
+        <a href="../documentation.html">RO</a>
+        <span>/</span>
+        <a href="#" aria-current="true">EN</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a class="logo" href="index.html" aria-label="ifx-compat">
+      <span class="logo-mark">ifx</span>
+      <span class="logo-text">informix<small>for PHP</small></span>
+    </a>
+    <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="main-nav" data-nav aria-label="Main navigation">
+      <a href="documentation.html" aria-current="page">Documentation</a><a href="index.html#modules">Modules</a><a href="index.html#quickstart">Quick start</a><a href="index.html#testing">Testing</a><a href="documentation.html#contributing">Contributing</a>
+    </nav>
+    <form class="search" role="search" data-search-form action="documentation.html">
+      <label class="sr-only" for="site-search">Search the documentation…</label>
+      <input id="site-search" type="search" name="q" placeholder="Search the documentation…" autocomplete="off">
+      <button type="submit" aria-label="Search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+    </form>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="docs-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">ifx-compat</a><span>/</span><span>documentation</span></div>
+    <h1>Module documentation</h1>
+    <p>Each module has its own complete documentation: requirements, build, configuration, API, LOBs, tests, compatibility and troubleshooting. Choose the module you work with.</p>
+  </div>
+</div>
+<div class="container docs-layout">
+  <aside class="docs-side">
+    <h3>Modules</h3>
+    <nav class="module-switch"><a href="pdo_informix.html">pdo_informix</a><a href="ifx_pdo.html">ifx_pdo</a><a href="ifx.html">ifx</a><a href="php_informix.html">php_informix</a></nav>
+    <h3>Contents</h3>
+    <nav>
+      <a href="#modules">Modules</a>
+      <a href="#choose">How to choose</a>
+      <a href="#compatibility">Compatibility</a>
+      <a href="#testing">Testing</a>
+      <a href="#reference">References</a>
+      <a href="#contributing">Contributing</a>
+      <a href="#license">License</a>
+    </nav>
+  </aside>
+  <div class="docs-main">
+    <section id="modules"><h2>Choose a module</h2>
+      <p>Four implementations, the same Informix database. Each page is self-contained and can be read without the others.</p>
+      <div class="module-grid"><a class="module-card" href="pdo_informix.html"><span class="module-kicker">pdo_informix</span><h3>pdo_informix — the Informix PDO driver</h3><p>The PDO driver underneath <code>ifx_pdo</code> and the PHP library. It provides the standard PDO API, LOB streams and direct Informix access through CSDK.</p><span class="module-foot"><span class="pill">C · PDO</span><span class="module-link">Open</span></span></a><a class="module-card" href="ifx_pdo.html"><span class="module-kicker">ifx_pdo</span><h3>ifx_pdo — the ifx API over PDO</h3><p>A C extension that exposes all 39 <code>ifx_*</code> / <code>ifxus_*</code> functions over <code>pdo_informix</code>. It has Zend resources, INI directives and an embedded PHP engine.</p><span class="module-foot"><span class="pill">C · PDO</span><span class="module-link">Open</span></span></a><a class="module-card" href="ifx.html"><span class="module-kicker">ifx</span><h3>ifx — the direct CSDK extension</h3><p>An independent C extension directly over the Informix Client SDK CLI. It implements all 39 functions without PDO and without <code>pdo_informix</code>.</p><span class="module-foot"><span class="pill">C · CSDK</span><span class="module-link">Open</span></span></a><a class="module-card" href="php_informix.html"><span class="module-kicker">php_informix</span><h3>php_informix — the pure PHP library</h3><p>The same 39 functions without compilation: one <code>require</code> over <code>pdo_informix</code>. Links and results are PHP objects.</p><span class="module-foot"><span class="pill">PHP · PDO</span><span class="module-link">Open</span></span></a></div>
+    </section>
+    <section id="choose"><h2>How to choose</h2><div class="table-wrap"><table><thead><tr><th>Criterion</th><th>pdo_informix</th><th>ifx_pdo</th><th>ifx</th><th>php_informix</th></tr></thead><tbody><tr><td>API</td><td>PDO</td><td>39 funcții</td><td>39 funcții</td><td>39 funcții</td></tr><tr><td>pdo_informix</td><td>itself</td><td>da</td><td>nu</td><td>da</td></tr><tr><td>CSDK</td><td>da</td><td>through driver</td><td>da</td><td>through driver</td></tr><tr><td>Build</td><td>C</td><td>C</td><td>C</td><td>nu</td></tr><tr><td>Link handle</td><td>PDO</td><td>resource</td><td>resource</td><td>object</td></tr></tbody></table></div>
+      <p>For new PDO code, start with <code>pdo_informix</code>. For legacy <code>ifx_*</code> code, choose <code>ifx_pdo</code> (PDO) or <code>ifx</code> (direct). The library is for deployment without compilation.</p>
+    </section>
+    <section id="compatibility"><h2>Compatibility</h2>
+      <p>The matrix is the result of real tests, not claims.</p>
+      <div class="table-wrap"><table class="matrix"><thead><tr><th>PHP</th><th>Windows</th><th>Linux</th><th>pdo_informix</th><th>ifx_pdo</th><th>ifx</th><th>php_informix</th></tr></thead><tbody><tr><td>PHP 7.0.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.1.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.2.34</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.3.33</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 7.4.32</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.0.30</td><td class="yes">ZTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.1.12</td><td class="yes">ZTS</td><td class="no">—</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.2.35</td><td class="no">—</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.3.36</td><td class="yes">ZTS</td><td class="no">—</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.4.27</td><td class="no">—</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr><tr><td>PHP 8.5.11/8.5.12</td><td class="yes">NTS</td><td class="yes">NTS</td><td class="yes">✓</td><td class="score">92/92</td><td class="score">102/102</td><td class="score">93 + 1</td></tr></tbody></table></div>
+      <p class="small-note">The Windows/Linux columns describe the ifx_pdo/library builds; direct ifx is tested on Windows x64.</p>
+    </section>
+    <section id="testing"><h2>Testing</h2>
+      <div class="stats">
+        <div class="stat"><strong>102</strong><span>direct ifx checks</span></div>
+        <div class="stat"><strong>92</strong><span>ifx_pdo checks</span></div>
+        <div class="stat"><strong>198</strong><span>PDO driver assertions</span></div>
+        <div class="stat"><strong>93 + 1</strong><span>library tests</span></div>
+      </div>
+      <p>Exact commands and environment variables are on each module page, in the Testing section.</p>
+    </section>
+    <section id="reference"><h2>References</h2>
+      <ul>
+        <li><a href="../reference/API.md">API.md</a> — signatures of the 39 functions</li>
+        <li><a href="../reference/BUILD-WINDOWS.md">BUILD-WINDOWS.md</a> — Windows build, step by step</li>
+        <li><a href="../reference/COMPATIBILITY.md">COMPATIBILITY.md</a> — matrix and testing notes</li>
+        <li><a href="../reference/BENCHMARK.md">BENCHMARK.md</a> — methodology and measured results</li>
+        <li><a href="../reference/MIGRATION.md">MIGRATION.md</a> — migrating from the old extension</li>
+        <li><a href="#testing">Testing</a> — environments, commands and cleanup</li>
+        <li><a href="#license">License</a> — component licenses and commercial use</li>
+      </ul>
+    </section>
+    <section id="contributing"><h2>Contributing</h2>
+      <p>Report the PHP version, NTS/ZTS, OS, binary and the minimal command that reproduces the issue. For library changes, regenerate the embedded source and run the affected suites.</p>
+      <p>Full pull-request and reporting instructions are in <code>CONTRIBUTING.md</code> and <code>SECURITY.md</code> in the repository root.</p>
+    </section>
+    <section id="license"><h2>License</h2>
+      <p>Original ifx-compat code is deliberately MIT, chosen for easy adoption; pdo_informix keeps the Apache-2.0 license of the IBM code. MIT and Apache-2.0 permit commercial use and resale when notices are preserved.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Component</th><th>License</th></tr></thead>
+        <tbody>
+          <tr><td><code>ifx_informix</code>, <code>ifx_pdo_informix</code>, <code>php_informix</code>, docs, scripts</td><td>MIT</td></tr>
+          <tr><td><code>pdo_informix/src</code></td><td>Apache-2.0 (IBM/PDO_INFORMIX)</td></tr>
+          <tr><td>original ext/informix</td><td>PHP License 3.01 (source not redistributed)</td></tr>
+          <tr><td>Informix CSDK/IDS</td><td>IBM commercial license, not included</td></tr>
+        </tbody>
+      </table></div>
+      <p>MIT and Apache-2.0 allow commercial use and resale; prohibiting resale of the original code requires a different license (for example AGPL-3.0 or PolyForm Noncommercial plus a commercial license).</p>
+    </section>
+  </div>
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="index.html"><span class="logo-mark">ifx</span><span class="logo-text">informix<small>for PHP</small></span></a>
+      <p>The procedural ifx_* API on top of the modern PDO driver, for PHP 7.0–8.5.</p>
+    </div>
+    <div>
+      <h3>Modules</h3>
+      <a href="pdo_informix.html">pdo_informix</a>
+      <a href="ifx_pdo.html">ifx_pdo</a>
+      <a href="ifx.html">direct ifx</a>
+      <a href="php_informix.html">PHP library</a>
+    </div>
+    <div>
+      <h3>Documentation</h3>
+      <a href="documentation.html#modules">Per-module guides</a>
+      <a href="documentation.html#compatibility">Compatibility</a>
+      <a href="documentation.html#testing">Testing</a>
+      <a href="documentation.html#reference">References</a>
+    </div>
+    <div>
+      <h3>Project</h3>
+      <a href="documentation.html#contributing">Contributing</a>
+      <a href="documentation.html#license">License</a>
+    </div>
+  </div>
+  <div class="container footer-note">
+    <p>Built on the original ext/informix (PHP 5.1) and pdo_informix extensions, with DeepSeek (AI), under the project author&#x27;s guidance. Original code MIT; pdo_informix Apache-2.0. Contributions and bug reports are welcome.</p>
+    <p class="footer-copy">© 2026 ifx-compat · Bilingual documentation</p>
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

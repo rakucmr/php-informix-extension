@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>php_informix — the pure PHP library — ifx-compat</title>
+<meta name="description" content="Complete documentation for php_informix: requirements, build, configuration, API, LOBs, tests and compatibility.">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%236f74b5'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='white' text-anchor='middle'%3Eifx%3C/text%3E%3C/svg%3E">
+</head>
+<body class="page-docs">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="utility">
+  <div class="container utility-inner">
+    <span>PHP 7.0–8.5 · IBM Informix</span>
+    <div class="utility-links">
+      <a href="index.html">Overview</a>
+      <a href="documentation.html">Documentation</a>
+      <span class="lang-switch" aria-label="Language">
+        <a href="../php_informix.html">RO</a>
+        <span>/</span>
+        <a href="#" aria-current="true">EN</a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="container masthead-inner">
+    <a class="logo" href="index.html" aria-label="ifx-compat">
+      <span class="logo-mark">ifx</span>
+      <span class="logo-text">informix<small>for PHP</small></span>
+    </a>
+    <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <nav class="main-nav" data-nav aria-label="Main navigation">
+      <a href="documentation.html" aria-current="page">Documentation</a><a href="index.html#modules">Modules</a><a href="index.html#quickstart">Quick start</a><a href="index.html#testing">Testing</a><a href="documentation.html#contributing">Contributing</a>
+    </nav>
+    <form class="search" role="search" data-search-form action="documentation.html">
+      <label class="sr-only" for="site-search">Search the documentation…</label>
+      <input id="site-search" type="search" name="q" placeholder="Search the documentation…" autocomplete="off">
+      <button type="submit" aria-label="Search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+    </form>
+  </div>
+</header>
+
+<main id="main">
+
+<div class="docs-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">ifx-compat</a><span>/</span><a href="documentation.html">documentation</a><span>/</span><span>php_informix</span></div>
+    <p class="eyebrow">PHP · PDO · PHP 7.0–8.5</p>
+    <h1>php_informix — the pure PHP library</h1>
+    <p>The same 39 functions without compilation: one <code>require</code> over <code>pdo_informix</code>. Links and results are PHP objects.</p>
+  </div>
+</div><div class="container docs-layout"><aside class="docs-side"><h3>Modules</h3><nav class="module-switch"><a href="pdo_informix.html">pdo_informix</a><a href="ifx_pdo.html">ifx_pdo</a><a href="ifx.html">ifx</a><a href="php_informix.html" class="active">php_informix</a></nav><h3>Contents</h3><nav><a href="#overview">Overview</a><a href="#facts">At a glance</a><a href="#requirements">Requirements</a><a href="#install">Build and install</a><a href="#config">Configuration</a><a href="#connect">Connecting</a><a href="#example">Complete example</a><a href="#api">API reference</a><a href="#lobs">LOBs and SLOBs</a><a href="#transactions">Transactions and errors</a><a href="#testing">Testing</a><a href="#compatibility">Compatibility</a><a href="#performance">Performance</a><a href="#troubleshooting">Troubleshooting</a><a href="#limits">Limitations</a><a href="#next">Other modules</a></nav><input class="doc-filter" data-doc-filter type="search" placeholder="Filter sections…" aria-label="Filter sections…"></aside><div class="docs-main"><section id="overview"><h2>Overview</h2><p>The library reimplements the procedural API in pure PHP over the PDO driver. Nothing is compiled: one <code>require</code> defines the 39 global functions. Links are <code>Informix\Connection</code> objects, results are <code>Informix\Result</code>, and LOB/CHAR/SLOB handles stay integer identifiers, as in the extension.</p><ul><li>Suitable for simple deployment, shared hosting and prototypes.</li><li>Requires <code>pdo_informix</code> and <code>ext-pdo</code>.</li><li>It does not conflict with the C extension: functions are defined only if they do not already exist.</li></ul><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Objects at the surface, handles in the API.</strong> <code>ifx_connect()</code> returns an object, but <code>ifx_create_blob()</code> returns an integer id used by <code>ifx_get_blob()</code>.</div></div></section><section id="facts"><h2>At a glance</h2><div class="table-wrap"><table><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody><tr><td>Binary / file</td><td><code>php_informix/src/autoload.php</code></td></tr><tr><td>API</td><td>39 <code>ifx_*</code> / <code>ifxus_*</code> functions</td></tr><tr><td>Dependencies</td><td><code>pdo_informix</code> + <code>ext-pdo</code></td></tr><tr><td>CSDK</td><td>4.50 or compatible</td></tr><tr><td>Own suite</td><td><strong>93 + 1</strong></td></tr></tbody></table></div></section><section id="requirements"><h2>Requirements</h2><div class="table-wrap"><table><thead><tr><th>Component</th><th>Requirement</th></tr></thead><tbody><tr><td>PHP</td><td>7.0–8.5 x64; NTS or ZTS, same build as the extension/driver.</td></tr><tr><td>Informix Client SDK</td><td>4.50 or compatible, with the CLI/ODBC libraries and build tools.</td></tr><tr><td>Informix server</td><td>IDS 14.10.FC12 or compatible; any test database.</td></tr><tr><td>ext-pdo</td><td>Required; the library uses PDO.</td></tr><tr><td>pdo_informix</td><td>Required at runtime.</td></tr><tr><td>Build tools</td><td>None; nothing is compiled.</td></tr></tbody></table></div><div class="notice"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 4h.01"/></svg><div><strong>PHP 7.0–7.3 are EOL.</strong> They are accepted for legacy applications but no longer receive security updates.</div></div></section><section id="install"><h2>Build and install</h2><p>Nothing is compiled. Copy the <code>php_informix/</code> directory into the project or install it with Composer, then load the autoloader.</p><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">require.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>require __DIR__ . &#x27;/php_informix/src/autoload.php&#x27;;</code></pre></div><div class="code"><div class="code-head"><span class="lang">bash</span><span class="file">composer</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>composer require informix/ifx-compat</code></pre></div><p>The <code>pdo_informix</code> driver is still required. Verify:</p><div class="code"><div class="code-head"><span class="lang">bash</span><span class="file">verify</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>php -r &quot;var_dump(PDO::getAvailableDrivers());&quot;</code></pre></div></section><section id="config"><h2>Configuration</h2><p>The library reads the same environment variables as the extension, but you can also set them through <code>Informix\Config</code>. It has no INI directives.</p><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">config.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>Informix\Config::set(&#x27;nullformat&#x27;, 1);
+Informix\Config::set(&#x27;charasvarchar&#x27;, 1);
+Informix\Config::set(&#x27;connect_timeout&#x27;, 5);</code></pre></div><p>Recognised variables: <code>IFX_BLOBINFILE</code>, <code>IFX_TEXTASVARCHAR</code>, <code>IFX_BYTEASVARCHAR</code>, <code>IFX_CHARASVARCHAR</code>, <code>IFX_NULLFORMAT</code>, <code>IFX_HTMLTBL_ESCAPE</code>, <code>IFX_ALLOW_PERSISTENT</code>, <code>IFX_CONNECT_TIMEOUT</code>, <code>IFX_DEFAULT_DATABASE</code>, <code>IFX_DEFAULT_USER</code>, <code>IFX_DEFAULT_PASSWORD</code>, <code>IFX_DEFAULT_HOST</code>, <code>IFX_HOST</code>, <code>IFX_SERVICE</code>, <code>IFX_PROTOCOL</code>, <code>IFX_USE_ODBC</code>, <code>DB_LOCALE</code>, <code>CLIENT_LOCALE</code>.</p></section><section id="connect"><h2>Connecting</h2><p>The library returns an <code>Informix\Connection</code> object; the rest of the API stays procedural.</p><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">connect.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>require __DIR__ . &#x27;/php_informix/src/autoload.php&#x27;;
+
+$conn = ifx_connect(
+    getenv(&#x27;IFX_DSN&#x27;),
+    getenv(&#x27;IFX_USER&#x27;),
+    getenv(&#x27;IFX_PASSWORD&#x27;)
+);
+
+var_dump($conn instanceof Informix\Connection); // true</code></pre></div></section><section id="example"><h2>Complete example</h2><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">ifx_example.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>&lt;?php
+
+require __DIR__ . &#x27;/php_informix/src/autoload.php&#x27;;
+
+$conn = ifx_connect(
+    getenv(&#x27;IFX_DSN&#x27;),
+    getenv(&#x27;IFX_USER&#x27;),
+    getenv(&#x27;IFX_PASSWORD&#x27;)
+);
+
+$res = ifx_query(
+    &#x27;select tabid, tabname from systables where tabid &lt;= 5 order by tabid&#x27;,
+    $conn,
+    IFX_SCROLL
+);
+
+echo &#x27;Coloane: &#x27;, ifx_num_fields($res), PHP_EOL;
+
+while (($row = ifx_fetch_row($res)) !== false) {
+    echo $row[&#x27;tabid&#x27;], &#x27; &#x27;, $row[&#x27;tabname&#x27;], PHP_EOL;
+}
+
+ifx_free_result($res);
+ifx_close($conn);</code></pre></div></section><section id="api"><h2>API reference</h2><p>All 39 functions are global and keep the original signatures. Links and results are resources in <code>ifx_pdo</code>/<code>ifx</code>, and objects in the library; LOB/CHAR/SLOB handles are integer identifiers.</p><h3>Connection</h3><div class="table-wrap"><table><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>ifx_connect($database, $userid, $password)</code></td><td>Opens a connection; cached by DSN + user + password.</td></tr><tr><td><code>ifx_pconnect($database, $userid, $password)</code></td><td>Persistent connection via PDO::ATTR_PERSISTENT.</td></tr><tr><td><code>ifx_close($link = null)</code></td><td>Closes the given link or the default connection.</td></tr></tbody></table></div><h3>Queries and results</h3><div class="table-wrap"><table><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>ifx_query($query, $link, $cursor_type, $blobidarray)</code></td><td>Prepare + execute; accepts IFX_SCROLL/IFX_HOLD and blob values.</td></tr><tr><td><code>ifx_prepare($query, $link, $cursor_type, $blobidarray)</code></td><td>Prepare only; execute with ifx_do().</td></tr><tr><td><code>ifx_do($result)</code></td><td>Executes a prepared statement; can re-execute a cursor.</td></tr><tr><td><code>ifx_fetch_row($result, $position = null)</code></td><td>Next row, or the row at the given scroll position.</td></tr><tr><td><code>ifx_htmltbl_result($result, $options = null)</code></td><td>Renders the result as an HTML table.</td></tr><tr><td><code>ifx_free_result($result)</code></td><td>Frees the result and the statement.</td></tr><tr><td><code>ifx_num_rows($result)</code></td><td>Number of rows fetched so far.</td></tr><tr><td><code>ifx_num_fields($result)</code></td><td>Number of columns.</td></tr><tr><td><code>ifx_affected_rows($result)</code></td><td>Rows affected by the last DML statement.</td></tr></tbody></table></div><h3>Metadata and errors</h3><div class="table-wrap"><table><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>ifx_fieldtypes($result)</code></td><td>Map column name → SQL type (e.g. SQLCHAR).</td></tr><tr><td><code>ifx_fieldproperties($result)</code></td><td>Properties: type, length, precision, scale, nullability.</td></tr><tr><td><code>ifx_getsqlca($result)</code></td><td>Approximation of sqlca: sqlerrd1/sqlerrd2.</td></tr><tr><td><code>ifx_error($link = null)</code></td><td>Status of the last operation: &#x27; &#x27;, W, E or N.</td></tr><tr><td><code>ifx_errormsg($errorcode = null)</code></td><td>Error message for the code, or the last error.</td></tr></tbody></table></div><h3>BLOB / BYTE / TEXT</h3><div class="table-wrap"><table><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>ifx_create_blob($type, $mode, $param)</code></td><td>Creates a blob: type 0=BYTE, 1=TEXT; mode 0=memory, 1=file.</td></tr><tr><td><code>ifx_get_blob($bid)</code></td><td>Blob content, or the file path in blobinfile mode.</td></tr><tr><td><code>ifx_update_blob($bid, $content)</code></td><td>Replaces blob content.</td></tr><tr><td><code>ifx_copy_blob($bid)</code></td><td>Copies a blob and returns the new id.</td></tr><tr><td><code>ifx_free_blob($bid)</code></td><td>Frees the blob.</td></tr><tr><td><code>ifx_blobinfile_mode($mode)</code></td><td>Global blob mode: 0=memory, 1=file.</td></tr><tr><td><code>ifx_textasvarchar($mode)</code></td><td>TEXT/CLOB as string, not a blob id.</td></tr><tr><td><code>ifx_byteasvarchar($mode)</code></td><td>BYTE/BLOB as string, not a blob id.</td></tr><tr><td><code>ifx_charasvarchar($mode)</code></td><td>Trim trailing spaces from CHAR.</td></tr><tr><td><code>ifx_nullformat($mode)</code></td><td>NULL as &quot;&quot; (0) or &quot;NULL&quot; (1).</td></tr></tbody></table></div><h3>CHAR</h3><div class="table-wrap"><table><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>ifx_create_char($param)</code></td><td>Creates a CHAR handle.</td></tr><tr><td><code>ifx_get_char($bid)</code></td><td>Content of the CHAR handle.</td></tr><tr><td><code>ifx_update_char($bid, $content)</code></td><td>Updates the CHAR handle.</td></tr><tr><td><code>ifx_free_char($bid)</code></td><td>Frees the CHAR handle.</td></tr></tbody></table></div><h3>SLOB (ifxus_*)</h3><div class="table-wrap"><table><thead><tr><th>Function</th><th>Description</th></tr></thead><tbody><tr><td><code>ifxus_create_slob($mode)</code></td><td>Creates a SLOB in memory or a file.</td></tr><tr><td><code>ifxus_open_slob($bid, $mode)</code></td><td>Opens an existing SLOB.</td></tr><tr><td><code>ifxus_close_slob($bid)</code></td><td>Closes the SLOB handle.</td></tr><tr><td><code>ifxus_tell_slob($bid)</code></td><td>Current position in the SLOB.</td></tr><tr><td><code>ifxus_seek_slob($bid, $mode, $offset)</code></td><td>Moves the position (SEEK_SET/CUR/END).</td></tr><tr><td><code>ifxus_read_slob($bid, $nbytes)</code></td><td>Reads n bytes from the SLOB.</td></tr><tr><td><code>ifxus_write_slob($bid, $content)</code></td><td>Writes to the SLOB.</td></tr><tr><td><code>ifxus_free_slob($bid)</code></td><td>Frees the SLOB.</td></tr></tbody></table></div><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Constants:</strong> <code>IFX_SCROLL</code>, <code>IFX_HOLD</code> and <code>IFX_LO_*</code> are defined by the library. <code>ifx_connect()</code> returns <code>Informix\Connection</code>, <code>ifx_query()</code> returns <code>Informix\Result</code>, and LOB/CHAR/SLOB handles stay integer ids.</div></div></section><section id="lobs"><h2>LOBs and SLOBs</h2><p>By default, <code>blobinfile=0</code> in <code>Informix\Config</code>: the row contains a <strong>blob id</strong>, and <code>ifx_get_blob()</code> returns the content. Set it with <code>Informix\Config::set('blobinfile', 1)</code> or the legacy function.</p><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">lob-insert.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>$text = ifx_create_blob(1, 0, &#x27;Hello from ifx-compat!&#x27;);
+$bytes = ifx_create_blob(0, 0, &quot;binary\0data&quot;);
+
+$res = ifx_query(
+    &#x27;insert into ifx_lob (txt, byt) values (?, ?)&#x27;,
+    $conn,
+    [$text, $bytes]
+);
+echo ifx_affected_rows($res);</code></pre></div><div class="table-wrap"><table><thead><tr><th>Mode</th><th>Setting</th><th>Result</th></tr></thead><tbody><tr><td>Blob id</td><td>default</td><td>Integer; <code>ifx_get_blob()</code> returns the content.</td></tr><tr><td>String</td><td><code>ifx_textasvarchar(1)</code> / <code>ifx_byteasvarchar(1)</code></td><td>Content directly in the row.</td></tr><tr><td>File</td><td><code>ifx_blobinfile_mode(1)</code></td><td><code>ifx_get_blob()</code> returns a temporary file path.</td></tr></tbody></table></div><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">lob-read.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>ifx_blobinfile_mode(1);
+$row = ifx_fetch_row(ifx_query(&#x27;select txt from ifx_lob&#x27;, $conn));
+echo file_get_contents(ifx_get_blob($row[&#x27;txt&#x27;]));
+
+$ch = ifx_create_char(&#x27;value&#x27;);
+ifx_update_char($ch, &#x27;updated&#x27;);
+echo ifx_get_char($ch);
+ifx_free_char($ch);</code></pre></div><p>SLOBs are client-side buffers, not server-side <code>ifx_lo_*</code> objects. For large files, file mode avoids duplicating memory.</p></section><section id="transactions"><h2>Transactions and errors</h2><div class="code"><div class="code-head"><span class="lang">php</span><span class="file">errors.php</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>$res = @ifx_query(&#x27;select * from missing_table&#x27;, $conn);
+if ($res === false) {
+    echo ifx_error(), PHP_EOL;      // E, W or N
+    echo ifx_errormsg(), PHP_EOL;   // driver message
+}
+
+ifx_query(&#x27;begin work&#x27;, $conn);
+// ...
+ifx_query(&#x27;commit work&#x27;, $conn);</code></pre></div><p>Cursors do not survive a <code>COMMIT</code>; re-read the result after commit. <code>ifx_getsqlca()</code> provides <code>sqlerrd1</code> and <code>sqlerrd2</code> for the last DML.</p></section><section id="testing"><h2>Testing</h2><p>The library suite has 93 passing tests and 1 skipped (UTF-8 on an <code>en_US.819</code> database). It runs over PDO, without a C extension; the driver must be loaded.</p><div class="code"><div class="code-head"><span class="lang">powershell</span><span class="file">run-tests.ps1</span><button class="copy" type="button" data-copy data-copied="Copied">Copy</button></div><pre><code>$env:INFORMIXDIR = &#x27;C:\IBM\informix&#x27;
+$env:INFORMIXSERVER = &#x27;&lt;server&gt;&#x27;
+$env:INFORMIXSQLHOSTS = &#x27;C:\IBM\informix\etc\sqlhosts&#x27;
+$env:IFX_TEST_DSN = &#x27;&lt;database&gt;@&lt;server&gt;&#x27;
+$env:IFX_TEST_USER = &#x27;&lt;user&gt;&#x27;
+$env:IFX_TEST_PASSWORD = &#x27;&lt;password&gt;&#x27;
+
+php -d extension=pdo_informix php_informix/tests/run-tests.php</code></pre></div><div class="notice info"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Real tests.</strong> The suites create temporary tables, run DML, LOBs and cursors, then clean up. They do not use mocks.</div></div></section><section id="compatibility"><h2>Compatibility</h2><div class="table-wrap"><table><thead><tr><th>PHP</th><th>Result</th></tr></thead><tbody><tr><td>PHP 7.0.33</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 7.1.33</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 7.2.34</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 7.3.33</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 7.4.32</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 8.0.30</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 8.1.12</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 8.2.35</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 8.3.36</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 8.4.27</td><td><strong>93 + 1</strong></td></tr><tr><td>PHP 8.5.11/8.5.12</td><td><strong>93 + 1</strong></td></tr></tbody></table></div><p>The results come from the real suites on each PHP build; they are not estimates.</p><p class="small-note"><a href="../reference/COMPATIBILITY.md">The full matrix and testing notes</a></p></section><section id="performance"><h2>Performance</h2><div class="table-wrap"><table><thead><tr><th>Operation</th><th>Module (ms/op)</th><th>Direct PDO (ms/op)</th><th>Ratio</th></tr></thead><tbody><tr><td>Connect + close</td><td>29.8900</td><td>27.4200</td><td>×1.09</td></tr><tr><td>Point SELECT</td><td>0.7635</td><td>0.7173</td><td>×1.06</td></tr><tr><td>COUNT(*)</td><td>0.7120</td><td>0.6645</td><td>×1.07</td></tr><tr><td>Catalog scan</td><td>2.0179</td><td>1.5123</td><td>×1.33</td></tr><tr><td>INSERT</td><td>1.4219</td><td>1.1075</td><td>×1.28</td></tr><tr><td>UPDATE</td><td>0.6583</td><td>0.3222</td><td>×2.04</td></tr></tbody></table></div><div class="table-wrap"><table><thead><tr><th>Concurrent connections</th><th>Module (ops/s)</th><th>Direct PDO (ops/s)</th></tr></thead><tbody><tr><td>1</td><td>874</td><td>1079</td></tr><tr><td>25</td><td>2717</td><td>3005</td></tr></tbody></table></div><p>Measured on PHP 8.5.11 NTS x64, Informix IDS 14.10.FC12, locally, with no network hop between client and server. Values are indicative; rebuild and re-measure in your environment.</p><p>This variant runs over PDO, so it pays the extra PHP-layer marshalling; the differences from PDO are most visible on UPDATE and scans.</p></section><section id="troubleshooting"><h2>Troubleshooting</h2><div class="table-wrap"><table><thead><tr><th>Symptom</th><th>Cause / fix</th></tr></thead><tbody><tr><td>The module does not load</td><td>Check NTS/ZTS, x64 and the PHP version; a DLL built for another version will not load.</td></tr><tr><td>CSDK missing at runtime</td><td>Add <code>%INFORMIXDIR%\bin</code> (Windows) or <code>$INFORMIXDIR/lib</code> (Linux) to <code>PATH</code>/<code>LD_LIBRARY_PATH</code>.</td></tr><tr><td>Server not found</td><td>Check <code>INFORMIXSERVER</code>, <code>INFORMIXSQLHOSTS</code> and the <code>sqlhosts</code> entry.</td></tr><tr><td><code>could not find driver</code></td><td>Install <code>pdo_informix</code> or set <code>IFX_USE_ODBC=1</code> for the experimental fallback.</td></tr><tr><td>Missing autoload</td><td>Include <code>php_informix/src/autoload.php</code> before the first call.</td></tr><tr><td>Long-running workers</td><td>Call <code>Informix\Api::reset()</code> between requests.</td></tr></tbody></table></div></section><section id="limits"><h2>Limitations</h2><ul><li>It runs over PDO, so it has overhead compared with the direct C extension.</li><li>It requires <code>pdo_informix</code> and <code>ext-pdo</code>.</li><li>In long-running workers, <code>Api::reset()</code> must be called.</li></ul></section><section id="next"><h2>Other modules</h2><div class="module-grid"><a class="module-card" href="pdo_informix.html"><span class="module-kicker">pdo_informix</span><h3>pdo_informix — the Informix PDO driver</h3><p>C · PDO</p><span class="module-link">Open</span></a><a class="module-card" href="ifx_pdo.html"><span class="module-kicker">ifx_pdo</span><h3>ifx_pdo — the ifx API over PDO</h3><p>C · PDO</p><span class="module-link">Open</span></a><a class="module-card" href="ifx.html"><span class="module-kicker">ifx</span><h3>ifx — the direct CSDK extension</h3><p>C · CSDK</p><span class="module-link">Open</span></a></div><p>References: <a href="../reference/API.md">API.md</a> · <a href="../reference/BUILD-WINDOWS.md">BUILD-WINDOWS.md</a> · <a href="../reference/COMPATIBILITY.md">COMPATIBILITY.md</a> · <a href="../reference/BENCHMARK.md">BENCHMARK.md</a> · <a href="../reference/MIGRATION.md">MIGRATION.md</a></p></section></div></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="logo" href="index.html"><span class="logo-mark">ifx</span><span class="logo-text">informix<small>for PHP</small></span></a>
+      <p>The procedural ifx_* API on top of the modern PDO driver, for PHP 7.0–8.5.</p>
+    </div>
+    <div>
+      <h3>Modules</h3>
+      <a href="pdo_informix.html">pdo_informix</a>
+      <a href="ifx_pdo.html">ifx_pdo</a>
+      <a href="ifx.html">direct ifx</a>
+      <a href="php_informix.html">PHP library</a>
+    </div>
+    <div>
+      <h3>Documentation</h3>
+      <a href="documentation.html#modules">Per-module guides</a>
+      <a href="documentation.html#compatibility">Compatibility</a>
+      <a href="documentation.html#testing">Testing</a>
+      <a href="documentation.html#reference">References</a>
+    </div>
+    <div>
+      <h3>Project</h3>
+      <a href="documentation.html#contributing">Contributing</a>
+      <a href="documentation.html#license">License</a>
+    </div>
+  </div>
+  <div class="container footer-note">
+    <p>Built on the original ext/informix (PHP 5.1) and pdo_informix extensions, with DeepSeek (AI), under the project author&#x27;s guidance. Original code MIT; pdo_informix Apache-2.0. Contributions and bug reports are welcome.</p>
+    <p class="footer-copy">© 2026 ifx-compat · Bilingual documentation</p>
+  </div>
+</footer>
+<script src="../assets/app.js"></script>
+</body>
+</html>

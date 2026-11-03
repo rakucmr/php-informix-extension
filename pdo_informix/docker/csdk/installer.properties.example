@@ -1,0 +1,9 @@
+### Informix Client SDK silent-install response template
+# Copy this file to installer.properties and set LICENSE_ACCEPTED=TRUE only
+# after you have reviewed and accepted IBM's license terms for your own use.
+LICENSE_ACCEPTED=
+USER_INSTALL_DIR=/opt/IBM/informix
+USE_OPENSSL_CONSOLE=",Use OpenSSL"
+CHOSEN_FEATURE_LIST=SDK,SDK-CPP,SDK-ESQL,SDK-ESQL-ACM,SDK-ODBC,GLS,GLS-WEURAM
+CHOSEN_INSTALL_FEATURE_LIST=SDK,SDK-CPP,SDK-ESQL,SDK-ESQL-ACM,SDK-ODBC,GLS,GLS-WEURAM
+CHOSEN_INSTALL_SET=Custom

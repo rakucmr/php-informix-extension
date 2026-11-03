@@ -1,0 +1,5 @@
+ARG_ENABLE('ifx', 'Informix direct support', 'no');
+
+if (PHP_IFX != 'no') {
+    EXTENSION('ifx', 'ifx.c', null, '/D COMPILE_DL_IFX /D HAVE_IFX');
+}
