@@ -33,7 +33,7 @@ jobs:
           git diff --exit-code -- ifx_pdo_informix/ifx_php.c
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
