@@ -1,0 +1,16 @@
+[Unit]
+Description=PHP Informix browser smoke test
+After=network.target
+
+[Service]
+Type=simple
+User=<web-user>
+Group=<web-user>
+EnvironmentFile=/etc/ifx-test.env
+WorkingDirectory=/var/www/ifx-test
+ExecStart=/usr/bin/php -S 0.0.0.0:18080 -t /var/www/ifx-test
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
